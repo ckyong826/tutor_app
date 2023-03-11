@@ -1,6 +1,6 @@
 # tutor_app
 
-A new Flutter project.
+The project for the hackathon project.
 
 ## Getting Started
 
