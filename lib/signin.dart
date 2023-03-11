@@ -7,12 +7,33 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 final _formfield = GlobalKey<FormState>();
 final emailController = TextEditingController();
 final passController = TextEditingController();
+bool isValid = true;
 bool passToggle = false;
+bool isEmailValid = false;
+bool isPassValid = false;
+bool printValid = false;
+
+bool isEmail(String str) {
+  return _email.hasMatch(str.toLowerCase());
+}
+
+bool isPass(String str) {
+  return _pass.hasMatch(str.toLowerCase());
+}
+
+RegExp _email = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+RegExp _pass = RegExp(r'^.{8,}$');
 
 //Sign Up
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -121,19 +142,61 @@ class SignUp extends StatelessWidget {
                                 SizedBox(height: size.height * 0.01),
                                 Center(
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    width: size.width * 0.6,
-                                    height: 37,
-                                    decoration: BoxDecoration(
-                                      color: colorcon,
-                                      borderRadius: BorderRadius.circular(29),
-                                    ),
-                                    child: TextFormField(
-                                        decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                    )),
-                                  ),
+                                      width: size.width * 0.6,
+                                      height: 37,
+                                      decoration: BoxDecoration(
+                                        color: colorcon,
+                                        borderRadius: BorderRadius.circular(29),
+                                      ),
+                                      child: TextFormField(
+                                        onChanged: (val) {
+                                          setState(() {
+                                            isEmailValid = isEmail(val);
+                                          });
+                                        },
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        controller: emailController,
+                                        style: GoogleFonts.openSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.0,
+                                          textStyle:
+                                              const TextStyle(color: colorf1),
+                                        ),
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 20, vertical: 14),
+                                          border: InputBorder.none,
+                                          hintText: "SomeThing@email.com",
+                                          hintStyle:
+                                              const TextStyle(color: colorf25),
+                                          suffixIcon: isEmailValid == false
+                                              ? const Icon(
+                                                  Icons.close_sharp,
+                                                  color: seccolor,
+                                                )
+                                              : const Icon(
+                                                  Icons.done,
+                                                  color: Colors.green,
+                                                ),
+                                          enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey.shade200,
+                                                  width: 0),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: isEmailValid == false
+                                                    ? seccolor
+                                                    : Colors.green,
+                                                width: 2),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                      )),
                                 ),
                                 SizedBox(height: size.height * 0.023),
                                 Row(
@@ -154,8 +217,6 @@ class SignUp extends StatelessWidget {
                                 SizedBox(height: size.height * 0.007),
                                 Center(
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
                                     width: size.width * 0.6,
                                     height: 37,
                                     decoration: BoxDecoration(
@@ -163,12 +224,68 @@ class SignUp extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(29),
                                     ),
                                     child: TextFormField(
-                                        decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                    )),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          isPassValid = isPass(val);
+                                        });
+                                      },
+                                      obscureText: !passToggle,
+                                      keyboardType:
+                                          TextInputType.visiblePassword,
+                                      controller: passController,
+                                      style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.0,
+                                        textStyle:
+                                            const TextStyle(color: colorf1),
+                                      ),
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 5),
+                                        border: InputBorder.none,
+                                        hintText: "At least 8 characters",
+                                        hintStyle:
+                                            const TextStyle(color: colorf25),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.grey.shade200,
+                                                width: 0),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: isPassValid == false
+                                                  ? seccolor
+                                                  : Colors.green,
+                                              width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        suffixIcon: InkWell(
+                                          child: Icon(
+                                            passToggle
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: colorf2,
+                                          ),
+                                          onTap: () {
+                                            setState(
+                                              () {
+                                                passToggle = !passToggle;
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                SizedBox(height: size.height * 0.045),
+                                SizedBox(height: size.height * 0.025),
+                                printValid
+                                    ? const ValidPrint()
+                                    : const Text(''),
+                                SizedBox(height: size.height * 0.015),
                                 Center(
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -180,11 +297,29 @@ class SignUp extends StatelessWidget {
                                           (size.height * 0.073)),
                                     ),
                                     onPressed: () {
-                                      Navigator.of(context).pushNamed('/roles');
+                                      isValid = (isEmailValid && isPassValid);
+                                      if (isValid == true) {
+                                        print("Sign Up Successfully");
+                                        emailController.clear();
+                                        passController.clear();
+                                        Navigator.of(context)
+                                            .pushNamed('/roles');
+                                        isValid = true;
+                                        passToggle = false;
+                                        isEmailValid = false;
+                                        isPassValid = false;
+                                        printValid = false;
+                                      } else {
+                                        setState(
+                                          () {
+                                            printValid = true;
+                                          },
+                                        );
+                                      }
                                     },
                                     child: Text(
                                       textAlign: TextAlign.center,
-                                      'NEXT',
+                                      'SIGN UP',
                                       style: GoogleFonts.openSans(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.0,
@@ -400,39 +535,59 @@ class _LogIn extends State<LogIn> {
                             SizedBox(height: size.height * 0.01),
                             Center(
                               child: Container(
-                                width: size.width * 0.6,
-                                height: 37,
-                                decoration: BoxDecoration(
-                                  color: colorcon,
-                                  borderRadius: BorderRadius.circular(29),
-                                ),
-                                child: Stack(children: [
-                                  TextFormField(
-                                      keyboardType: TextInputType.emailAddress,
-                                      controller: emailController,
-                                      style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.0,
-                                        textStyle:
-                                            const TextStyle(color: colorf1),
+                                  width: size.width * 0.6,
+                                  height: 37,
+                                  decoration: BoxDecoration(
+                                    color: colorcon,
+                                    borderRadius: BorderRadius.circular(29),
+                                  ),
+                                  child: TextFormField(
+                                    onChanged: (val) {
+                                      setState(() {
+                                        isEmailValid = isEmail(val);
+                                      });
+                                    },
+                                    keyboardType: TextInputType.emailAddress,
+                                    controller: emailController,
+                                    style: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
+                                      textStyle:
+                                          const TextStyle(color: colorf1),
+                                    ),
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 14),
+                                      border: InputBorder.none,
+                                      hintText: "SomeThing@email.com",
+                                      hintStyle:
+                                          const TextStyle(color: colorf25),
+                                      suffixIcon: isEmailValid == false
+                                          ? const Icon(
+                                              Icons.close_sharp,
+                                              color: seccolor,
+                                            )
+                                          : const Icon(
+                                              Icons.done,
+                                              color: Colors.green,
+                                            ),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade200,
+                                              width: 0),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: isEmailValid == false
+                                                ? seccolor
+                                                : Colors.green,
+                                            width: 2),
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
-                                      decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 15),
-                                        border: InputBorder.none,
-                                      ),
-                                      validator: (value) {
-                                        bool emailValid = RegExp(
-                                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                            .hasMatch(value!);
-                                        if (value.isEmpty) {
-                                          return "Enter Email";
-                                        } else if (!emailValid) {
-                                          return "Enter Valid Email";
-                                        }
-                                      }),
-                                ]),
-                              ),
+                                    ),
+                                  )),
                             ),
                             SizedBox(height: size.height * 0.023),
                             Row(
@@ -459,6 +614,11 @@ class _LogIn extends State<LogIn> {
                                   borderRadius: BorderRadius.circular(29),
                                 ),
                                 child: TextFormField(
+                                  onChanged: (val) {
+                                    setState(() {
+                                      isPassValid = isPass(val);
+                                    });
+                                  },
                                   obscureText: !passToggle,
                                   keyboardType: TextInputType.visiblePassword,
                                   controller: passController,
@@ -471,6 +631,22 @@ class _LogIn extends State<LogIn> {
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 5),
                                     border: InputBorder.none,
+                                    hintText: "At least 8 characters",
+                                    hintStyle: const TextStyle(color: colorf25),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade200,
+                                            width: 0),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: isPassValid == false
+                                              ? seccolor
+                                              : Colors.green,
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                     suffixIcon: InkWell(
                                       child: Icon(
                                         passToggle
@@ -487,17 +663,12 @@ class _LogIn extends State<LogIn> {
                                       },
                                     ),
                                   ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Enter Password";
-                                    } else if (passController.text.length < 8) {
-                                      return "Password Length should not be less than 8 characters";
-                                    }
-                                  },
                                 ),
                               ),
                             ),
-                            SizedBox(height: size.height * 0.045),
+                            SizedBox(height: size.height * 0.025),
+                            printValid ? const ValidPrint() : const Text(''),
+                            SizedBox(height: size.height * 0.015),
                             Center(
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
@@ -508,11 +679,23 @@ class _LogIn extends State<LogIn> {
                                       (size.height * 0.073)),
                                 ),
                                 onPressed: () {
-                                  if (_formfield.currentState!.validate()) {
+                                  isValid = (isEmailValid && isPassValid);
+                                  if (isValid == true) {
                                     print("Log In Successfully");
                                     emailController.clear();
                                     passController.clear();
                                     Navigator.of(context).pushNamed('/home');
+                                    isValid = true;
+                                    passToggle = false;
+                                    isEmailValid = false;
+                                    isPassValid = false;
+                                    printValid = false;
+                                  } else {
+                                    setState(
+                                      () {
+                                        printValid = true;
+                                      },
+                                    );
                                   }
                                 },
                                 child: Text(
@@ -898,5 +1081,23 @@ class Roles extends StatelessWidget {
                     )
                   ],
                 ))));
+  }
+}
+
+class ValidPrint extends StatelessWidget {
+  const ValidPrint({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'Please Enter Valid Email and Password',
+        style: GoogleFonts.openSans(
+          fontWeight: FontWeight.bold,
+          fontSize: 10.0,
+          textStyle: const TextStyle(color: seccolor),
+        ),
+      ),
+    );
   }
 }
