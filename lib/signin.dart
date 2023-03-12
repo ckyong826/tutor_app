@@ -12,7 +12,7 @@ bool passToggle = false;
 bool isEmailValid = false;
 bool isPassValid = false;
 bool printValid = false;
-
+bool printValid2 = false;
 bool isEmail(String str) {
   return _email.hasMatch(str.toLowerCase());
 }
@@ -282,7 +282,7 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                 ),
                                 SizedBox(height: size.height * 0.025),
-                                printValid
+                                printValid2
                                     ? const ValidPrint()
                                     : const Text(''),
                                 SizedBox(height: size.height * 0.015),
@@ -308,11 +308,11 @@ class _SignUpState extends State<SignUp> {
                                         passToggle = false;
                                         isEmailValid = false;
                                         isPassValid = false;
-                                        printValid = false;
+                                        printValid2 = false;
                                       } else {
                                         setState(
                                           () {
-                                            printValid = true;
+                                            printValid2 = true;
                                           },
                                         );
                                       }
