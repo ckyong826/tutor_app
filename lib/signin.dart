@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'auth.dart';
 
 final _formfield = GlobalKey<FormState>();
 final emailController = TextEditingController();
@@ -34,6 +36,27 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final User? user = Auth().currentUser;
+
+  Future<void> signOut() async {
+    await Auth().signOut();
+  }
+
+  Widget _title() {
+    return const Text('Firebase Auth');
+  }
+
+  Widget _userUid() {
+    return Text(user?.email ?? 'User email');
+  }
+
+  Widget _signOutButton() {
+    return ElevatedButton(
+      onPressed: signOut,
+      child: const Text('Sign Out'),
+    );
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

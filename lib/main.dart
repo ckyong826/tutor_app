@@ -4,6 +4,7 @@ import 'package:tutor_app/instruction.dart';
 import 'package:tutor_app/signin.dart';
 import 'package:tutor_app/details.dart';
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() => runApp(MaterialApp(
       initialRoute: '/firstpage',
