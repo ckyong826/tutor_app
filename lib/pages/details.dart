@@ -4,6 +4,8 @@ import '../components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dropdown_button2/src/dropdown_button2.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:tutor_app/components/DataDetails.dart';
 
 final usernameController = TextEditingController();
 final schoolController = TextEditingController();
@@ -123,6 +125,7 @@ class _DetailStudent extends State<DetailStudent> {
                             ],
                           ),
                           SizedBox(height: size.height * 0.01),
+                          //Usernameinput
                           Row(
                             children: [
                               SizedBox(width: size.width * 0.23),
@@ -439,6 +442,8 @@ class _DetailStudent extends State<DetailStudent> {
                                     (size.width * 0.75), (size.height * 0.073)),
                               ),
                               onPressed: () {
+                                final username = usernameController.text;
+                                createUsername(name: username);
                                 Navigator.of(context).pushNamed('/done');
                               },
                               child: Text(

@@ -72,7 +72,7 @@ class _SignUpPage extends State<SignUpPage> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return HomePage();
+            return Roles();
           } else {
             return const SignUp();
           }
@@ -110,7 +110,7 @@ class _SignUpState extends State<SignUp> {
           );
         });
 
-    //sign in
+    //sign up
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text, password: passController.text);

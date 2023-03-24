@@ -23,7 +23,7 @@ Future<void> main() async {
       '/ins1': (context) => const Ins1(),
       '/ins2': (context) => const Ins2(),
       '/ins3': (context) => const Ins3(),
-      '/signup': (context) => const SignUp(),
+      '/signup': (context) => const SignUpPage(),
       '/login': (context) => const LoginPage(),
       '/roles': (context) => Roles(),
       '/detailstudent': (context) => const DetailStudent(),
