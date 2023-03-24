@@ -7,15 +7,20 @@ import 'package:dropdown_button2/src/dropdown_button2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tutor_app/components/DataDetails.dart';
 
-final usernameController = TextEditingController();
-final schoolController = TextEditingController();
-
+final usernameSTUDENTController = TextEditingController();
+final schoolSTUDENTController = TextEditingController();
+final usernameTUTORController = TextEditingController();
+final schoolTUTORController = TextEditingController();
+final nameController = TextEditingController();
+final resultController = TextEditingController();
 bool isUsernameblank = false;
 bool isLevelblank = false;
 bool isSchoolblank = false;
 bool isAcedemicblank = false;
 bool isValid = false;
 bool printValid = false;
+String? dropdownValueLEVEL;
+String? dropdownValueACEDEMIC;
 
 //Detail Student
 class DetailStudent extends StatefulWidget {
@@ -160,7 +165,7 @@ class _DetailStudent extends State<DetailStudent> {
                                     });
                                   },
                                   keyboardType: TextInputType.name,
-                                  controller: usernameController,
+                                  controller: usernameSTUDENTController,
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 20),
@@ -310,7 +315,7 @@ class _DetailStudent extends State<DetailStudent> {
                                     });
                                   },
                                   keyboardType: TextInputType.name,
-                                  controller: schoolController,
+                                  controller: schoolSTUDENTController,
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 20),
@@ -348,7 +353,7 @@ class _DetailStudent extends State<DetailStudent> {
                             children: [
                               SizedBox(width: size.width * 0.23),
                               Text(
-                                'Acedemic',
+                                'Academic',
                                 textAlign: TextAlign.left,
                                 style: GoogleFonts.openSans(
                                   fontWeight: FontWeight.bold,
@@ -442,8 +447,13 @@ class _DetailStudent extends State<DetailStudent> {
                                     (size.width * 0.75), (size.height * 0.073)),
                               ),
                               onPressed: () {
-                                final username = usernameController.text;
-                                createUsername(name: username);
+                                final student = Student(
+                                  username: usernameSTUDENTController.text,
+                                  level: dropdownValueLEVEL,
+                                  school: schoolSTUDENTController.text,
+                                  academic: dropdownValueACEDEMIC,
+                                );
+                                createStudent(student);
                                 Navigator.of(context).pushNamed('/done');
                               },
                               child: Text(
@@ -478,8 +488,8 @@ class _DetailStudent extends State<DetailStudent> {
                                       isSchoolblank);
                                   if (isValid == true) {
                                     print("Fill in Successfully");
-                                    usernameController.clear();
-                                    schoolController.clear();
+                                    usernameSTUDENTController.clear();
+                                    schoolSTUDENTController.clear();
                                     Navigator.of(context).pushNamed('/roles');
                                     isValid = true;
                                     isLevelblank = false;
@@ -546,8 +556,7 @@ class _DetailTutor extends State<DetailTutor> {
     'Year 4',
     'Year 5',
   ];
-  String? dropdownValueLEVEL;
-  String? dropdownValueACEDEMIC;
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -556,250 +565,138 @@ class _DetailTutor extends State<DetailTutor> {
 
     return Scaffold(
         backgroundColor: colorf3,
-        body: SafeArea(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: size.height * 0.964,
-              child: Stack(children: <Widget>[
-                //blur
-                Positioned(
-                  child: ImageFiltered(
-                    // blurWFR (155:803)
-                    imageFilter: ImageFilter.blur(
-                      sigmaX: 100,
-                      sigmaY: 100,
-                    ),
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(0, 80, 80, 0),
-                      width: size.width * 0.8,
-                      height: size.height,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(129.5),
-                        color: tricolor,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: SafeArea(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: size.height * 0.964,
+                child: Stack(children: <Widget>[
+                  //blur
+                  Positioned(
+                    child: ImageFiltered(
+                      // blurWFR (155:803)
+                      imageFilter: ImageFilter.blur(
+                        sigmaX: 100,
+                        sigmaY: 100,
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(0, 80, 80, 0),
+                        width: size.width * 0.8,
+                        height: size.height,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(129.5),
+                          color: tricolor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  child: Image.asset(
-                    "lib/assets/images/login.png",
-                    height: size.height * 0.3,
-                    width: size.width,
+                  Positioned(
+                    child: Image.asset(
+                      "lib/assets/images/login.png",
+                      height: size.height * 0.3,
+                      width: size.width,
+                    ),
                   ),
-                ),
-                //WhiteContainer
-                Container(
-                  margin: EdgeInsets.only(top: size.height * 0.28),
-                  height: size.height,
-                  width: size.width,
-                  decoration: const BoxDecoration(
-                      color: colorf3,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
-                      )),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: <Widget>[
-                        SizedBox(height: size.height * 0.03),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.11),
-                            Text(
-                              'Sign Up',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30.0,
-                                letterSpacing: 1.0,
-                                textStyle: const TextStyle(color: colorf1),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.11),
-                            Text(
-                              'Fill in your details as tutor !',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.0,
-                                letterSpacing: 1.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.03),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'Username',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            width: size.width * 0.6,
-                            height: 37,
-                            decoration: BoxDecoration(
-                              color: colorcon,
-                              borderRadius: BorderRadius.circular(29),
-                            ),
-                            child: TextFormField(
-                                decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            )),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.007),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'Level',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                            child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 5),
-                          width: size.width * 0.6,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            color: colorcon,
-                            borderRadius: BorderRadius.circular(29),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                              child: DropdownButton2(
-                            hint: Text(
-                              'Choose Level',
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.0,
-                                textStyle: const TextStyle(color: colorf1),
-                              ),
-                            ),
-                            dropdownStyleData: DropdownStyleData(
-                              maxHeight: 100,
-                              width: size.width * 0.6,
-                              elevation: 2,
-                              offset: const Offset(-20, -15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              scrollbarTheme: ScrollbarThemeData(
-                                radius: const Radius.circular(40),
-                                thickness: MaterialStateProperty.all<double>(6),
-                                thumbVisibility:
-                                    MaterialStateProperty.all<bool>(true),
-                              ),
-                            ),
-                            iconStyleData: const IconStyleData(
-                              icon: FaIcon(
-                                FontAwesomeIcons.chevronDown,
-                                size: 15.0,
-                                color: colorf2,
-                              ),
-                            ),
-                            isExpanded: true,
-                            style: GoogleFonts.openSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.0,
-                              textStyle: const TextStyle(color: colorf1),
-                            ),
-                            value: dropdownValueLEVEL,
-                            items: LEVEL.map<DropdownMenuItem<String>>(
-                              (item) {
-                                return DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownValueLEVEL = newValue!;
-                              });
-                            },
-                          )),
+                  //WhiteContainer
+                  Container(
+                    margin: EdgeInsets.only(top: size.height * 0.28),
+                    height: size.height,
+                    width: size.width,
+                    decoration: const BoxDecoration(
+                        color: colorf3,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         )),
-                        SizedBox(height: size.height * 0.007),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'School',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: <Widget>[
+                          SizedBox(height: size.height * 0.03),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.11),
+                              Text(
+                                'Sign Up',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30.0,
+                                  letterSpacing: 1.0,
+                                  textStyle: const TextStyle(color: colorf1),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            width: size.width * 0.6,
-                            height: 37,
-                            decoration: BoxDecoration(
-                              color: colorcon,
-                              borderRadius: BorderRadius.circular(29),
-                            ),
-                            child: TextFormField(
-                                decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            )),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: size.height * 0.007),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'Acedemic',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.11),
+                              Text(
+                                'Fill in your details as tutor !',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12.0,
+                                  letterSpacing: 1.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
                               ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.03),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'Username',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              width: size.width * 0.6,
+                              height: 37,
+                              decoration: BoxDecoration(
+                                color: colorcon,
+                                borderRadius: BorderRadius.circular(29),
+                              ),
+                              child: TextFormField(
+                                  controller: usernameTUTORController,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                  )),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                          child: Container(
+                          ),
+                          SizedBox(height: size.height * 0.007),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'Level',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                              child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 5),
                             width: size.width * 0.6,
@@ -811,7 +708,7 @@ class _DetailTutor extends State<DetailTutor> {
                             child: DropdownButtonHideUnderline(
                                 child: DropdownButton2(
                               hint: Text(
-                                'Choose Acedemic',
+                                'Choose Level',
                                 style: GoogleFonts.openSans(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12.0,
@@ -847,8 +744,8 @@ class _DetailTutor extends State<DetailTutor> {
                                 fontSize: 12.0,
                                 textStyle: const TextStyle(color: colorf1),
                               ),
-                              value: dropdownValueACEDEMIC,
-                              items: ACEDEMIC.map<DropdownMenuItem<String>>(
+                              value: dropdownValueLEVEL,
+                              items: LEVEL.map<DropdownMenuItem<String>>(
                                 (item) {
                                   return DropdownMenuItem<String>(
                                     value: item,
@@ -861,73 +758,192 @@ class _DetailTutor extends State<DetailTutor> {
                               ).toList(),
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  dropdownValueACEDEMIC = newValue!;
+                                  dropdownValueLEVEL = newValue!;
                                 });
                               },
                             )),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        const ValidPrint(),
-                        SizedBox(height: size.height * 0.01),
-                        Center(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: pricolor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              fixedSize: Size(
-                                  (size.width * 0.75), (size.height * 0.073)),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/detailtutor2');
-                            },
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              'NEXT',
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                                textStyle: const TextStyle(color: colorf3),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Already have your account?',
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.0,
-                                letterSpacing: 1.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/login');
-                              },
-                              child: Text(
-                                ' Log In',
+                          )),
+                          SizedBox(height: size.height * 0.007),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'School',
+                                textAlign: TextAlign.left,
                                 style: GoogleFonts.openSans(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              width: size.width * 0.6,
+                              height: 37,
+                              decoration: BoxDecoration(
+                                color: colorcon,
+                                borderRadius: BorderRadius.circular(29),
+                              ),
+                              child: TextFormField(
+                                  controller: schoolTUTORController,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                  )),
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.007),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'Acedemic',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              width: size.width * 0.6,
+                              height: 37,
+                              decoration: BoxDecoration(
+                                color: colorcon,
+                                borderRadius: BorderRadius.circular(29),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                  child: DropdownButton2(
+                                hint: Text(
+                                  'Choose Acedemic',
+                                  style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.0,
+                                    textStyle: const TextStyle(color: colorf1),
+                                  ),
+                                ),
+                                dropdownStyleData: DropdownStyleData(
+                                  maxHeight: 100,
+                                  width: size.width * 0.6,
+                                  elevation: 2,
+                                  offset: const Offset(-20, -15),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  scrollbarTheme: ScrollbarThemeData(
+                                    radius: const Radius.circular(40),
+                                    thickness:
+                                        MaterialStateProperty.all<double>(6),
+                                    thumbVisibility:
+                                        MaterialStateProperty.all<bool>(true),
+                                  ),
+                                ),
+                                iconStyleData: const IconStyleData(
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.chevronDown,
+                                    size: 15.0,
+                                    color: colorf2,
+                                  ),
+                                ),
+                                isExpanded: true,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.0,
+                                  textStyle: const TextStyle(color: colorf1),
+                                ),
+                                value: dropdownValueACEDEMIC,
+                                items: ACEDEMIC.map<DropdownMenuItem<String>>(
+                                  (item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValueACEDEMIC = newValue!;
+                                  });
+                                },
+                              )),
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.01),
+                          const ValidPrint(),
+                          SizedBox(height: size.height * 0.01),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: pricolor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
+                                fixedSize: Size(
+                                    (size.width * 0.75), (size.height * 0.073)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed('/detailtutor2');
+                              },
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                'NEXT',
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  textStyle: const TextStyle(color: colorf3),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Already have your account?',
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w300,
                                   fontSize: 12.0,
                                   letterSpacing: 1.0,
                                   textStyle: const TextStyle(color: colorf2),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ]),
-                ),
-              ]),
-            )
-          ],
-        )));
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed('/login');
+                                },
+                                child: Text(
+                                  ' Log In',
+                                  style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.0,
+                                    letterSpacing: 1.0,
+                                    textStyle: const TextStyle(color: colorf2),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ]),
+                  ),
+                ]),
+              )
+            ],
+          )),
+        ));
   }
 
   @override
@@ -968,383 +984,402 @@ class _DetailTutor2 extends State<DetailTutor2> {
     return Scaffold(
       backgroundColor: colorf3,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: size.height * 0.964,
-              child: Stack(children: <Widget>[
-                //blur
-                Positioned(
-                  child: ImageFiltered(
-                    // blurWFR (155:803)
-                    imageFilter: ImageFilter.blur(
-                      sigmaX: 100,
-                      sigmaY: 100,
-                    ),
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(0, 80, 80, 0),
-                      width: size.width * 0.8,
-                      height: size.height,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(129.5),
-                        color: tricolor,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: size.height * 0.964,
+                child: Stack(children: <Widget>[
+                  //blur
+                  Positioned(
+                    child: ImageFiltered(
+                      // blurWFR (155:803)
+                      imageFilter: ImageFilter.blur(
+                        sigmaX: 100,
+                        sigmaY: 100,
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(0, 80, 80, 0),
+                        width: size.width * 0.8,
+                        height: size.height,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(129.5),
+                          color: tricolor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  child: Image.asset(
-                    "lib/assets/images/login.png",
-                    height: size.height * 0.3,
-                    width: size.width,
+                  Positioned(
+                    child: Image.asset(
+                      "lib/assets/images/login.png",
+                      height: size.height * 0.3,
+                      width: size.width,
+                    ),
                   ),
-                ),
-                //WhiteContainer
-                Container(
-                  margin: EdgeInsets.only(top: size.height * 0.28),
-                  height: size.height,
-                  width: size.width,
-                  decoration: const BoxDecoration(
-                      color: colorf3,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
-                      )),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: <Widget>[
-                        SizedBox(height: size.height * 0.03),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.11),
-                            Text(
-                              'Sign Up',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30.0,
-                                letterSpacing: 1.0,
-                                textStyle: const TextStyle(color: colorf1),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.11),
-                            Text(
-                              'Fill in your details as tutor !',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.0,
-                                letterSpacing: 1.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.03),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'Name',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            width: size.width * 0.6,
-                            height: 37,
-                            decoration: BoxDecoration(
-                              color: colorcon,
-                              borderRadius: BorderRadius.circular(29),
-                            ),
-                            child: TextFormField(
-                                decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            )),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.007),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'Subject',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                            child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 5),
-                          width: size.width * 0.6,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            color: colorcon,
-                            borderRadius: BorderRadius.circular(29),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                              child: DropdownButton2(
-                            hint: Text(
-                              'Choose Subject',
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.0,
-                                textStyle: const TextStyle(color: colorf1),
-                              ),
-                            ),
-                            dropdownStyleData: DropdownStyleData(
-                              maxHeight: 200,
-                              width: size.width * 0.6,
-                              elevation: 2,
-                              offset: const Offset(-20, -15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              scrollbarTheme: ScrollbarThemeData(
-                                radius: const Radius.circular(40),
-                                thickness: MaterialStateProperty.all<double>(6),
-                                thumbVisibility:
-                                    MaterialStateProperty.all<bool>(true),
-                              ),
-                            ),
-                            iconStyleData: const IconStyleData(
-                              icon: FaIcon(
-                                FontAwesomeIcons.chevronDown,
-                                size: 15.0,
-                                color: colorf2,
-                              ),
-                            ),
-                            isExpanded: true,
-                            style: GoogleFonts.openSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.0,
-                              textStyle: const TextStyle(color: colorf1),
-                            ),
-                            items: items.map<DropdownMenuItem<String>>((item) {
-                              return DropdownMenuItem<String>(
-                                value: item,
-                                enabled: false,
-                                child: StatefulBuilder(
-                                  builder: (context, menuSetState) {
-                                    final isSelected =
-                                        selectedItems.contains(item);
-                                    return InkWell(
-                                      onTap: () {
-                                        isSelected
-                                            ? selectedItems.remove(item)
-                                            : selectedItems.add(item);
-                                        //This rebuilds the StatefulWidget to update the button's text
-                                        setState(() {});
-                                        //This rebuilds the dropdownMenu Widget to update the check mark
-                                        menuSetState(() {});
-                                      },
-                                      child: Container(
-                                        height: double.infinity,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              item,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            const Expanded(child: SizedBox()),
-                                            isSelected
-                                                ? const Icon(
-                                                    Icons.check_circle_outline,
-                                                    size: 20.0,
-                                                    color: colorf1,
-                                                  )
-                                                : const Icon(
-                                                    Icons.circle_outlined,
-                                                    size: 20.0,
-                                                    color: colorf1,
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            }).toList(),
-                            value: selectedItems.isEmpty
-                                ? null
-                                : selectedItems.last,
-                            onChanged: (value) {},
-                            selectedItemBuilder: (context) {
-                              return items.map(
-                                (item) {
-                                  return Container(
-                                    alignment: AlignmentDirectional.centerStart,
-                                    child: Text(
-                                      selectedItems.join(', '),
-                                      style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.0,
-                                        textStyle:
-                                            const TextStyle(color: colorf1),
-                                      ),
-                                      maxLines: 1,
-                                    ),
-                                  );
-                                },
-                              ).toList();
-                            },
-                          )),
+                  //WhiteContainer
+                  Container(
+                    margin: EdgeInsets.only(top: size.height * 0.28),
+                    height: size.height,
+                    width: size.width,
+                    decoration: const BoxDecoration(
+                        color: colorf3,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         )),
-                        SizedBox(height: size.height * 0.007),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'Result',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            width: size.width * 0.6,
-                            height: 37,
-                            decoration: BoxDecoration(
-                              color: colorcon,
-                              borderRadius: BorderRadius.circular(29),
-                            ),
-                            child: TextFormField(
-                                decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            )),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.007),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.23),
-                            Text(
-                              'Proof',
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.005),
-                        Center(
-                            child: Container(
-                          width: size.width * 0.6,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            color: colorcon,
-                            borderRadius: BorderRadius.circular(29),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: <Widget>[
+                          SizedBox(height: size.height * 0.03),
+                          Row(
                             children: [
-                              IconButton(
-                                icon: const FaIcon(
-                                  FontAwesomeIcons.circlePlus,
-                                  size: 18.0,
-                                  color: colorf2,
+                              SizedBox(width: size.width * 0.11),
+                              Text(
+                                'Sign Up',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30.0,
+                                  letterSpacing: 1.0,
+                                  textStyle: const TextStyle(color: colorf1),
                                 ),
-                                onPressed: () {},
                               ),
                             ],
                           ),
-                        )),
-                        SizedBox(height: size.height * 0.03),
-                        Center(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: pricolor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              fixedSize: Size(
-                                  (size.width * 0.75), (size.height * 0.073)),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/done');
-                            },
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              'NEXT',
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                                textStyle: const TextStyle(color: colorf3),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              'Already have your account?',
-                              style: GoogleFonts.openSans(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.0,
-                                letterSpacing: 1.0,
-                                textStyle: const TextStyle(color: colorf2),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/login');
-                              },
-                              child: Text(
-                                ' Log In',
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.11),
+                              Text(
+                                'Fill in your details as tutor !',
+                                textAlign: TextAlign.left,
                                 style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w300,
                                   fontSize: 12.0,
                                   letterSpacing: 1.0,
                                   textStyle: const TextStyle(color: colorf2),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ]),
-                ),
-              ]),
-            )
-          ],
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.03),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'Name',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              width: size.width * 0.6,
+                              height: 37,
+                              decoration: BoxDecoration(
+                                color: colorcon,
+                                borderRadius: BorderRadius.circular(29),
+                              ),
+                              child: TextFormField(
+                                  controller: nameController,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                  )),
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.007),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'Subject',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                              child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            width: size.width * 0.6,
+                            height: 37,
+                            decoration: BoxDecoration(
+                              color: colorcon,
+                              borderRadius: BorderRadius.circular(29),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                                child: DropdownButton2(
+                              hint: Text(
+                                'Choose Subject',
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.0,
+                                  textStyle: const TextStyle(color: colorf1),
+                                ),
+                              ),
+                              dropdownStyleData: DropdownStyleData(
+                                maxHeight: 200,
+                                width: size.width * 0.6,
+                                elevation: 2,
+                                offset: const Offset(-20, -15),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                scrollbarTheme: ScrollbarThemeData(
+                                  radius: const Radius.circular(40),
+                                  thickness:
+                                      MaterialStateProperty.all<double>(6),
+                                  thumbVisibility:
+                                      MaterialStateProperty.all<bool>(true),
+                                ),
+                              ),
+                              iconStyleData: const IconStyleData(
+                                icon: FaIcon(
+                                  FontAwesomeIcons.chevronDown,
+                                  size: 15.0,
+                                  color: colorf2,
+                                ),
+                              ),
+                              isExpanded: true,
+                              style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12.0,
+                                textStyle: const TextStyle(color: colorf1),
+                              ),
+                              items:
+                                  items.map<DropdownMenuItem<String>>((item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  enabled: false,
+                                  child: StatefulBuilder(
+                                    builder: (context, menuSetState) {
+                                      final isSelected =
+                                          selectedItems.contains(item);
+                                      return InkWell(
+                                        onTap: () {
+                                          isSelected
+                                              ? selectedItems.remove(item)
+                                              : selectedItems.add(item);
+                                          //This rebuilds the StatefulWidget to update the button's text
+                                          setState(() {});
+                                          //This rebuilds the dropdownMenu Widget to update the check mark
+                                          menuSetState(() {});
+                                        },
+                                        child: Container(
+                                          height: double.infinity,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                item,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              const Expanded(child: SizedBox()),
+                                              isSelected
+                                                  ? const Icon(
+                                                      Icons
+                                                          .check_circle_outline,
+                                                      size: 20.0,
+                                                      color: colorf1,
+                                                    )
+                                                  : const Icon(
+                                                      Icons.circle_outlined,
+                                                      size: 20.0,
+                                                      color: colorf1,
+                                                    ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              }).toList(),
+                              value: selectedItems.isEmpty
+                                  ? null
+                                  : selectedItems.last,
+                              onChanged: (value) {},
+                              selectedItemBuilder: (context) {
+                                return items.map(
+                                  (item) {
+                                    return Container(
+                                      alignment:
+                                          AlignmentDirectional.centerStart,
+                                      child: Text(
+                                        selectedItems.join(', '),
+                                        style: GoogleFonts.openSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.0,
+                                          textStyle:
+                                              const TextStyle(color: colorf1),
+                                        ),
+                                        maxLines: 1,
+                                      ),
+                                    );
+                                  },
+                                ).toList();
+                              },
+                            )),
+                          )),
+                          SizedBox(height: size.height * 0.007),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'Result',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              width: size.width * 0.6,
+                              height: 37,
+                              decoration: BoxDecoration(
+                                color: colorcon,
+                                borderRadius: BorderRadius.circular(29),
+                              ),
+                              child: TextFormField(
+                                  controller: resultController,
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                  )),
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.007),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.23),
+                              Text(
+                                'Proof',
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.005),
+                          Center(
+                              child: Container(
+                            width: size.width * 0.6,
+                            height: 37,
+                            decoration: BoxDecoration(
+                              color: colorcon,
+                              borderRadius: BorderRadius.circular(29),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: const FaIcon(
+                                    FontAwesomeIcons.circlePlus,
+                                    size: 18.0,
+                                    color: colorf2,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          )),
+                          SizedBox(height: size.height * 0.03),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: pricolor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
+                                fixedSize: Size(
+                                    (size.width * 0.75), (size.height * 0.073)),
+                              ),
+                              onPressed: () {
+                                final tutor = Tutor(
+                                  username: usernameTUTORController.text,
+                                  level: dropdownValueLEVEL,
+                                  school: schoolTUTORController.text,
+                                  academic: dropdownValueACEDEMIC,
+                                  name: nameController.text,
+                                  subject: selectedItems,
+                                  result: resultController.text,
+                                );
+                                createTutor(tutor);
+                                Navigator.of(context).pushNamed('/done');
+                              },
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                'NEXT',
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  textStyle: const TextStyle(color: colorf3),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.01),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Already have your account?',
+                                style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12.0,
+                                  letterSpacing: 1.0,
+                                  textStyle: const TextStyle(color: colorf2),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed('/login');
+                                },
+                                child: Text(
+                                  ' Log In',
+                                  style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.0,
+                                    letterSpacing: 1.0,
+                                    textStyle: const TextStyle(color: colorf2),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ]),
+                  ),
+                ]),
+              )
+            ],
+          ),
         ),
       ),
     );

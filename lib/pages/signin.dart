@@ -69,7 +69,7 @@ class _SignUpPage extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        stream: FirebaseAuth.instance.idTokenChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Roles();
@@ -115,6 +115,7 @@ class _SignUpState extends State<SignUp> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text, password: passController.text);
       Navigator.pop(context);
+      Navigator.of(context).pushNamed('/roles');
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       showErrorMessage(e.code);
@@ -468,19 +469,23 @@ class _SignUpState extends State<SignUp> {
                                 SizedBox(height: size.height * 0.025),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const <Widget>[
-                                    FaIcon(
-                                      FontAwesomeIcons.google,
-                                      color: colorf15,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () =>
+                                          AuthService().signInWithGoogle(),
+                                      child: const FaIcon(
+                                        FontAwesomeIcons.google,
+                                        color: colorf15,
+                                      ),
                                     ),
-                                    SizedBox(width: 25),
-                                    FaIcon(
+                                    const SizedBox(width: 25),
+                                    const FaIcon(
                                       FontAwesomeIcons.squareFacebook,
                                       color: colorf15,
                                       size: 30,
                                     ),
-                                    SizedBox(width: 25),
-                                    FaIcon(
+                                    const SizedBox(width: 25),
+                                    const FaIcon(
                                       FontAwesomeIcons.apple,
                                       color: colorf15,
                                       size: 30,
@@ -889,8 +894,9 @@ class _LogIn extends State<LogIn> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       GestureDetector(
-                                        onTap: () =>
-                                            AuthService().signInWithGoogle(),
+                                        onTap: () {
+                                          AuthService().signInWithGoogle();
+                                        },
                                         child: const FaIcon(
                                           FontAwesomeIcons.google,
                                           color: colorf15,
