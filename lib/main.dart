@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:tutor_app/home_screen.dart';
-import 'package:tutor_app/instruction.dart';
-import 'package:tutor_app/signin.dart';
-import 'package:tutor_app/details.dart';
+import 'package:tutor_app/pages/loginorsignin.dart';
+import 'package:tutor_app/pages/instruction.dart';
+import 'package:tutor_app/pages/signin.dart';
+import 'package:tutor_app/pages/details.dart';
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'auth.dart';
+import 'pages/homepage.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(MaterialApp(
     initialRoute: '/firstpage',
     routes: {
       '/firstpage': (context) => const Firstp(),
-      '/home': (context) => const HomeScreen(),
+      '/home': (context) => const LoginorSignin(),
       '/ins1': (context) => const Ins1(),
       '/ins2': (context) => const Ins2(),
       '/ins3': (context) => const Ins3(),
       '/signup': (context) => const SignUp(),
-      '/login': (context) => const LogIn(),
-      '/roles': (context) => const Roles(),
+      '/login': (context) => const LoginPage(),
+      '/roles': (context) => Roles(),
       '/detailstudent': (context) => const DetailStudent(),
       '/detailtutor': (context) => const DetailTutor(),
       '/detailtutor2': (context) => const DetailTutor2(),
@@ -69,40 +72,5 @@ class Fpage extends State<Firstp> {
   route() {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const Ins1()));
-  }
-}
-
-class FirebaseHomepage extends StatefulWidget {
-  const FirebaseHomepage({super.key});
-
-  @override
-  State<FirebaseHomepage> createState() => _FirebaseHomepageState();
-}
-
-class _FirebaseHomepageState extends State<FirebaseHomepage> {
-  final User? user = Auth().currentUser;
-
-  Future<void> signOut() async {
-    await Auth().signOut();
-  }
-
-  Widget _title() {
-    return const Text('Firebase Auth');
-  }
-
-  Widget _userUid() {
-    return Text(user?.email ?? 'User email');
-  }
-
-  Widget _signOutButton() {
-    return ElevatedButton(
-      onPressed: signOut,
-      child: const Text('Sign Out'),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
