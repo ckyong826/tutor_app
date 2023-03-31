@@ -9,8 +9,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../firebase_options.dart';
-import 'homepage.dart';
+import 'Afterloginpagehomepage.dart';
 import 'package:tutor_app/components/GoogleAuth.dart';
+import 'home_page.dart';
 
 final _formfield = GlobalKey<FormState>();
 bool isValid = true;
@@ -169,7 +170,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         Positioned(
                           child: Image.asset(
-                            "lib/assets/images/login.png",
+                            "assets/images/login.png",
                             height: size.height * 0.3,
                             width: size.width,
                           ),
@@ -592,7 +593,7 @@ class _LogIn extends State<LogIn> {
                           ),
                           Positioned(
                             child: Image.asset(
-                              "lib/assets/images/login.png",
+                              "assets/images/login.png",
                               height: size.height * 0.3,
                               width: size.width,
                             ),
@@ -970,7 +971,7 @@ class Roles extends StatelessWidget {
                         ),
                         Positioned(
                           child: Image.asset(
-                            "lib/assets/images/login.png",
+                            "assets/images/login.png",
                             height: size.height * 0.3,
                             width: size.width,
                           ),
@@ -1059,7 +1060,7 @@ class Roles extends StatelessWidget {
                                                     alignment: FractionalOffset
                                                         .topCenter,
                                                     image: AssetImage(
-                                                        "lib/assets/images/student.png"))),
+                                                        "assets/images/student.png"))),
                                           ),
                                         ),
                                         SizedBox(height: size.height * 0.01),
@@ -1101,7 +1102,7 @@ class Roles extends StatelessWidget {
                                                     alignment: FractionalOffset
                                                         .topCenter,
                                                     image: AssetImage(
-                                                        "lib/assets/images/tutor.png"))),
+                                                        "assets/images/tutor.png"))),
                                           ),
                                         ),
                                         SizedBox(height: size.height * 0.01),

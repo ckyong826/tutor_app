@@ -78,7 +78,7 @@ class _DetailStudent extends State<DetailStudent> {
                   ),
                   Positioned(
                     child: Image.asset(
-                      "lib/assets/images/login.png",
+                      "assets/images/login.png",
                       height: size.height * 0.3,
                       width: size.width,
                     ),
@@ -595,7 +595,7 @@ class _DetailTutor extends State<DetailTutor> {
                   ),
                   Positioned(
                     child: Image.asset(
-                      "lib/assets/images/login.png",
+                      "assets/images/login.png",
                       height: size.height * 0.3,
                       width: size.width,
                     ),
@@ -1013,7 +1013,7 @@ class _DetailTutor2 extends State<DetailTutor2> {
                   ),
                   Positioned(
                     child: Image.asset(
-                      "lib/assets/images/login.png",
+                      "assets/images/login.png",
                       height: size.height * 0.3,
                       width: size.width,
                     ),
@@ -1436,7 +1436,7 @@ class _Welcome extends State<Welcome> {
                 ),
                 Positioned(
                   child: Image.asset(
-                    "lib/assets/images/login.png",
+                    "assets/images/login.png",
                     height: size.height * 0.3,
                     width: size.width,
                   ),

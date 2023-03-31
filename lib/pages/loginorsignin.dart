@@ -27,7 +27,7 @@ class LoginorSignin extends StatelessWidget {
               //ImageCenter
               SizedBox(height: size.height * 0.08),
               Image.asset(
-                "lib/assets/images/home1.png",
+                "assets/images/home1.png",
                 height: size.height * 0.4,
                 width: size.width * 0.7,
               ),

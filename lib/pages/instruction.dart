@@ -20,7 +20,7 @@ class Ins1 extends StatelessWidget {
           //ImageCenter
           SizedBox(height: size.height * 0.13),
           Image.asset(
-            "lib/assets/images/ins1.png",
+            "assets/images/ins1.png",
             height: size.height * 0.4,
             width: size.width * 0.7,
           ),
@@ -118,7 +118,7 @@ class Ins2 extends StatelessWidget {
           //ImageCenter
           SizedBox(height: size.height * 0.13),
           Image.asset(
-            "lib/assets/images/ins2.png",
+            "assets/images/ins2.png",
             height: size.height * 0.4,
             width: size.width * 0.7,
           ),
@@ -216,7 +216,7 @@ class Ins3 extends StatelessWidget {
           //ImageCenter
           SizedBox(height: size.height * 0.13),
           Image.asset(
-            "lib/assets/images/ins3.png",
+            "assets/images/ins3.png",
             height: size.height * 0.4,
             width: size.width * 0.7,
           ),

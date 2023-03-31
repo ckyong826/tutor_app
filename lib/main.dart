@@ -6,8 +6,14 @@ import 'package:tutor_app/pages/details.dart';
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'pages/homepage.dart';
+import 'pages/Afterloginpagehomepage.dart';
 import 'firebase_options.dart';
+import 'package:tutor_app/pages/book_session_page.dart';
+import 'package:tutor_app/pages/find_tutor_page.dart';
+import 'package:tutor_app/pages/home_page.dart';
+import 'package:tutor_app/pages/resources_page.dart';
+import 'package:tutor_app/pages/sessions_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +22,7 @@ Future<void> main() async {
   );
 
   runApp(MaterialApp(
-    initialRoute: '/firstpage',
+    initialRoute: '/3',
     routes: {
       '/firstpage': (context) => const Firstp(),
       '/home': (context) => const LoginorSignin(),
@@ -30,6 +36,11 @@ Future<void> main() async {
       '/detailtutor': (context) => const DetailTutor(),
       '/detailtutor2': (context) => const DetailTutor2(),
       '/done': (context) => const Welcome(),
+      '/': (context) => const HomePage(),
+      '/1': (context) => const ResourcesPage(),
+      '/2': (context) => const SessionsPage(),
+      '/3': (context) => const FindTutorPage(),
+      '/book_session': (context) => BookSessionPage(),
     },
   ));
 }
