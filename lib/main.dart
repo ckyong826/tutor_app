@@ -1,87 +1,202 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tutor_app/pages/loginorsignin.dart';
-import 'package:tutor_app/pages/instruction.dart';
-import 'package:tutor_app/pages/signin.dart';
-import 'package:tutor_app/pages/details.dart';
-import 'dart:async';
+import 'package:go_router/go_router.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'pages/Afterloginpagehomepage.dart';
-import 'firebase_options.dart';
+import 'package:tutor_app/Root/home_page.dart';
+import 'package:tutor_app/Root/sessions_page.dart';
 import 'package:tutor_app/pages/book_session_page.dart';
 import 'package:tutor_app/pages/find_tutor_page.dart';
-import 'package:tutor_app/pages/home_page.dart';
+import 'package:tutor_app/pages/instruction.dart';
+import 'package:tutor_app/pages/loginorsignin.dart';
 import 'package:tutor_app/pages/resources_page.dart';
-import 'package:tutor_app/pages/sessions_page.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:tutor_app/routes/ScafoldWithBottomNavBar.dart';
 
-Future<void> main() async {
+import 'Root/profile.dart';
+import 'Root/resources.dart';
+import 'Screen/Resources/categories.dart';
+import 'Screen/Resources/detailed_posting.dart';
+import 'Screen/Resources/forum.dart';
+import 'Screen/Resources/notes.dart';
+import 'Screen/Resources/pages.dart';
+import 'Screen/Resources/post_question.dart';
+import 'Screen/Resources/post_resources.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  runApp(MaterialApp(
-    initialRoute: '/3',
-    routes: {
-      '/firstpage': (context) => const Firstp(),
-      '/home': (context) => const LoginorSignin(),
-      '/ins1': (context) => const Ins1(),
-      '/ins2': (context) => const Ins2(),
-      '/ins3': (context) => const Ins3(),
-      '/signup': (context) => const SignUpPage(),
-      '/login': (context) => const LoginPage(),
-      '/roles': (context) => Roles(),
-      '/detailstudent': (context) => const DetailStudent(),
-      '/detailtutor': (context) => const DetailTutor(),
-      '/detailtutor2': (context) => const DetailTutor2(),
-      '/done': (context) => const Welcome(),
-      '/': (context) => const HomePage(),
-      '/1': (context) => const ResourcesPage(),
-      '/2': (context) => const SessionsPage(),
-      '/3': (context) => const FindTutorPage(),
-      '/book_session': (context) => BookSessionPage(),
-    },
-  ));
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
-class Firstp extends StatefulWidget {
-  const Firstp({super.key});
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
 
-  @override
-  State<Firstp> createState() => Fpage();
-}
+  final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
-class Fpage extends State<Firstp> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    startTime();
-  }
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: SafeArea(
-      child: Column(children: <Widget>[
-        Image.asset(
-          "lib/assets/images/logo.png",
-          height: size.height * 0.9,
-          width: size.width,
-        ),
-      ]),
-    ));
-  }
+    final tabs = [
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/home',
+        icon: Icon(Icons.home_outlined),
+        label: 'Home',
+      ),
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/sessions',
+        icon: Icon(Icons.calendar_month_outlined),
+        label: 'Session',
+      ),
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/resources',
+        icon: Icon(Icons.sticky_note_2_outlined),
+        label: 'Resources',
+      ),
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/profile',
+        icon: Icon(Icons.person_2_outlined),
+        label: 'Profile',
+      ),
+    ];
 
-  startTime() async {
-    var duration = const Duration(seconds: 4);
-    return Timer(duration, route);
-  }
+    final goRouter = GoRouter(
+        initialLocation: '/',
+        navigatorKey: _rootNavigatorKey,
+        debugLogDiagnostics: true,
+        routes: [
+          ShellRoute(
+              // navigatorKey: _shellNavigatorKey,
+              builder: (context, state, child) {
+                return ScaffoldWithBottomNavBar(tabs: tabs, child: child);
+              },
+              routes: [
+                GoRoute(
+                    path: '/',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                          key: state.pageKey,
+                          child: const Firstp(),
+                        ),
+                    routes: [
+                      GoRoute(
+                          path: 'ins1',
+                          builder: (context, state) => const Ins1(),
+                          routes: [
+                            GoRoute(
+                                path: 'ins2',
+                                builder: (context, state) => const Ins2(),
+                                routes: [
+                                  GoRoute(
+                                      path: 'ins3',
+                                      builder: (context, state) => const Ins3(),
+                                      routes: [
+                                        GoRoute(
+                                          path: 'login',
+                                          builder: (context, state) =>
+                                              const LoginorSignin(),
+                                        )
+                                      ])
+                                ])
+                          ])
+                    ]),
+                //Home page
+                GoRoute(
+                  path: '/home',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const HomePage(),
+                  ),
+                ),
+                //Sessions page
+                GoRoute(
+                    path: '/sessions',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                          key: state.pageKey,
+                          child: const SessionsPage(),
+                        ),
+                    routes: [
+                      GoRoute(
+                          path: 'findTutor',
+                          builder: (context, state) => const FindTutorPage(),
+                          routes: [
+                            GoRoute(
+                              path: 'book',
+                              builder: (context, state) => BookSessionPage(),
+                            )
+                          ])
+                    ]),
+                //Resources page
+                GoRoute(
+                    path: '/resources',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                          key: state.pageKey,
+                          child: const ResourcesPage(),
+                        ),
+                    routes: [
+                      GoRoute(
+                          path: 'categories',
+                          builder: (context, state) => const Categories(),
+                          routes: [
+                            GoRoute(
+                                path: 'notes/:subjects',
+                                builder: (context, state) =>
+                                    Notes(subjects: state.params["subjects"]!),
+                                routes: [
+                                  GoRoute(
+                                    path: 'pages',
+                                    builder: (context, state) => const Pages(),
+                                  ),
+                                  GoRoute(
+                                    path: 'add',
+                                    builder: (context, state) =>
+                                        const PostResources(),
+                                  )
+                                ])
+                          ]),
+                      GoRoute(
+                          path: 'forum',
+                          builder: (context, state) => const Forum(),
+                          routes: [
+                            GoRoute(
+                              path: 'post',
+                              builder: (context, state) => const PostQuestion(),
+                            ),
+                            GoRoute(
+                              path: 'comment/:title/:description',
+                              builder: (context, state) => DetailedPost(
+                                questionTitle: state.params['title']!,
+                                questionDescription:
+                                    state.params['description']!,
+                              ),
+                            )
+                          ])
+                    ]),
+                //Profile page
+                GoRoute(
+                  path: '/profile',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const Profile(),
+                  ),
+                ),
+              ])
+        ]);
 
-  route() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Ins1()));
+    return MaterialApp.router(
+      routerConfig: goRouter,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.indigo),
+    );
   }
+}
+
+class ScaffoldWithNavBarTabItem extends BottomNavigationBarItem {
+  /// Constructs an [ScaffoldWithNavBarTabItem].
+  const ScaffoldWithNavBarTabItem(
+      {required this.initialLocation, required Widget icon, String? label})
+      : super(icon: icon, label: label);
+
+  /// The initial location/path
+  final String initialLocation;
 }

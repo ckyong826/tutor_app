@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tutor_app/utils/find_tutor_components.dart';
 import 'package:tutor_app/utils/size_config.dart';
 
@@ -140,20 +141,25 @@ class _SessionsPageState extends State<SessionsPage> {
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      Container(
-                        height: ScreenSize.vertical! * 10,
-                        width: ScreenSize.horizontal! * 87,
-                        decoration: BoxDecoration(
-                            color: const Color(0xffFF9AB2),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Center(
-                          child: Text(
-                            "Find a Tutor",
-                            style: TextStyle(
-                                fontSize: ScreenSize.vertical! * 3,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                                letterSpacing: ScreenSize.vertical! * 0.1),
+                      GestureDetector(
+                        onTap: () {
+                          context.go('/sessions/findTutor');
+                        },
+                        child: Container(
+                          height: ScreenSize.vertical! * 10,
+                          width: ScreenSize.horizontal! * 87,
+                          decoration: BoxDecoration(
+                              color: const Color(0xffFF9AB2),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Text(
+                              "Find a Tutor",
+                              style: TextStyle(
+                                  fontSize: ScreenSize.vertical! * 3,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                  letterSpacing: ScreenSize.vertical! * 0.1),
+                            ),
                           ),
                         ),
                       ),

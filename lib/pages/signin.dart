@@ -11,7 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import '../firebase_options.dart';
 import 'Afterloginpagehomepage.dart';
 import 'package:tutor_app/components/GoogleAuth.dart';
-import 'home_page.dart';
+import '../Root/home_page.dart';
 
 final _formfield = GlobalKey<FormState>();
 bool isValid = true;

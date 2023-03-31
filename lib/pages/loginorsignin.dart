@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'signin.dart';
@@ -65,7 +66,7 @@ class LoginorSignin extends StatelessWidget {
                   fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/login');
+                  context.go('/home');
                 },
                 child: Text(
                   'LOG IN',
@@ -88,7 +89,7 @@ class LoginorSignin extends StatelessWidget {
                   side: const BorderSide(color: pricolor, width: 2),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/signup');
+                  context.go('/home');
                 },
                 child: Text(
                   'SIGN UP',

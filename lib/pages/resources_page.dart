@@ -29,12 +29,14 @@ class _ResourcesPageState extends State<ResourcesPage> {
                 smallerTitle: "Top this week",
                 image: "assets/pencil.png",
                 color: Color(0xffFFDABF),
+                onTap: '/resources/categories',
               ),
               ResourceCard(
                 title: "QuestionsExchange",
                 smallerTitle: "Popular this week",
                 image: "assets/speaker.png",
                 color: Color(0xffFF9AB2),
+                onTap: '/resources/forum',
               )
             ]),
           ),

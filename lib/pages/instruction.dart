@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -82,7 +85,7 @@ class Ins1 extends StatelessWidget {
               fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
             ),
             onPressed: () {
-              Navigator.of(context).pushNamed('/ins2');
+              context.go('/ins1/ins2');
             },
             child: Text(
               textAlign: TextAlign.center,
@@ -180,7 +183,7 @@ class Ins2 extends StatelessWidget {
               fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
             ),
             onPressed: () {
-              Navigator.of(context).pushNamed('/ins3');
+              context.go('/ins1/ins2/ins3');
             },
             child: Text(
               textAlign: TextAlign.center,
@@ -278,7 +281,7 @@ class Ins3 extends StatelessWidget {
               fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
             ),
             onPressed: () {
-              Navigator.of(context).pushNamed('/home');
+              context.go('/ins1/ins2/ins3/login');
             },
             child: Text(
               textAlign: TextAlign.center,
@@ -293,5 +296,45 @@ class Ins3 extends StatelessWidget {
         ],
       )),
     ));
+  }
+}
+
+class Firstp extends StatefulWidget {
+  const Firstp({super.key});
+
+  @override
+  State<Firstp> createState() => Fpage();
+}
+
+class Fpage extends State<Firstp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startTime();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+        body: SafeArea(
+      child: Column(children: <Widget>[
+        Image.asset(
+          "assets/images/logo.png",
+          height: size.height * 0.9,
+          width: size.width,
+        ),
+      ]),
+    ));
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 4);
+    return Timer(duration, route);
+  }
+
+  route() {
+    context.go('/ins1');
   }
 }
