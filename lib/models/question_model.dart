@@ -25,11 +25,11 @@ class Question {
         'solvingPreference': solvingPreference,
       };
 
-  static Question fromJson(Map<String, dynamic> json) =>
-      Question(
-        title: json['title'], 
-        description: json['description'],
-        questionLevel: json['questionLevel'], 
-        questionSubject: json['questionSubject'], 
-        solvingPreference: json['solvingPreference']);
+  static Question fromJson(Map<String, dynamic> json) => Question(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      questionLevel: json['questionLevel'],
+      questionSubject: json['questionSubject'],
+      solvingPreference: json['solvingPreference']);
 }

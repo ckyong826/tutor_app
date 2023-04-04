@@ -28,7 +28,6 @@ class _QuestionPostingState extends State<QuestionPosting> {
               );
               // questionPosts.map(Question question).toList();
               // return ResourcesCard(title: title);
-
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -49,6 +48,7 @@ class _QuestionPostingState extends State<QuestionPosting> {
   }
 
   Widget buildQuestionCard(Question question) => PostCard(
+        id: question.id,
         title: question.title,
         description: question.description,
       );

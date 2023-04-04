@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class PostCard extends StatefulWidget {
-  const PostCard({super.key, required this.title, required this.description});
+import '../state/like_state.dart';
 
+class PostCard extends StatefulWidget {
+  const PostCard(
+      {super.key,
+      required this.id,
+      required this.title,
+      required this.description});
+  final String id;
   final String title;
   final String description;
 
@@ -18,13 +24,16 @@ class _PostCardState extends State<PostCard> {
       children: [
         const SizedBox(height: 15),
         GestureDetector(
-          onTap: () {            
-            GoRouter.of(context)
-                .go('/resources/forum/comment/${widget.title}/${widget.description}');
+          onTap: () {
+            GoRouter.of(context).go(
+                '/resources/forum/comment/${widget.id}/${widget.title}/${widget.description}');
           },
           child: Container(
+            constraints: const BoxConstraints(
+              minHeight: 100,
+              maxHeight: double.infinity,
+            ),
             width: 340,
-            height: 120,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
@@ -49,7 +58,8 @@ class _PostCardState extends State<PostCard> {
                   ),
                 ),
                 const SizedBox(width: 20),
-                Expanded(
+                Flexible(
+                  fit: FlexFit.tight,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -77,18 +87,12 @@ class _PostCardState extends State<PostCard> {
                               color: Colors.grey.shade600, fontSize: 13),
                         ),
                       ),
+                      const SizedBox(height: 6),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
                         child: Row(
                           children: <Widget>[
-                            Row(
-                              children: const [
-                                Icon(Icons.favorite_border_outlined, size: 15),
-                                SizedBox(width: 5),
-                                // Text("${likes} Likes"),
-                                Text("500 Likes"),
-                              ],
-                            ),
+                            const LikeButton(),
                             const SizedBox(width: 40),
                             Row(
                               children: const [
@@ -100,6 +104,7 @@ class _PostCardState extends State<PostCard> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
