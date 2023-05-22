@@ -57,8 +57,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                     Text(
                       "Find a tutor",
                       style: TextStyle(
-                          fontSize: ScreenSize.vertical! * 4,
-                          fontWeight: FontWeight.w600),
+                          fontSize: ScreenSize.vertical! * 4, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: ScreenSize.vertical! * 2,
@@ -84,12 +83,11 @@ class _FindTutorPageState extends State<FindTutorPage> {
               Container(
                 padding: EdgeInsets.all(ScreenSize.horizontal! * 5),
                 width: ScreenSize.horizontal! * 100,
-                height: ScreenSize.vertical! * 78,
+                height: ScreenSize.vertical! * 70,
                 decoration: const BoxDecoration(
                     color: Color.fromARGB(155, 255, 255, 255),
                     borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(40),
-                        topLeft: Radius.circular(40))),
+                        topRight: Radius.circular(40), topLeft: Radius.circular(40))),
                 child: Column(
                   children: [
                     //Subjects
@@ -157,15 +155,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                                 itemBuilder: (context, index) {
                                   // Loop through filteredTutors List
                                   final currentTutor = filteredTutors[index];
-                                  print(currentTutor["bio"]);
 
-                                  print(currentTutor["name"]);
-                                  print(currentTutor["rules"]);
-                                  print(currentTutor["sessions"]);
-                                  print(currentTutor["stars"]);
-                                  print(currentTutor["subject"]);
-                                  print(currentTutor["uni"]);
-                                  print(currentTutor["image"]);
                                   return FindTutorCard(
                                     tutorName: currentTutor["name"],
                                     tutorUni: currentTutor["uni"],

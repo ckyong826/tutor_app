@@ -9,6 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class BookSessionPage extends StatefulWidget {
+  final arguments;
+  const BookSessionPage({super.key, required this.arguments});
   @override
   State<BookSessionPage> createState() => _BookSessionPageState();
 }
@@ -22,8 +24,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
   DateTime selectDay = DateTime.now();
 
   bool checkDuplicateSessions(DateTime tempDateTime, String tutorSessionID) {
-    return bookedSessions[tempDateTime]!
-        .any((session) => session.id == tutorSessionID);
+    return bookedSessions[tempDateTime]!.any((session) => session.id == tutorSessionID);
   }
 
   bool alreadyBooked(List DBparticipants, List<Session> bookedSessionsList) {
@@ -37,8 +38,9 @@ class _BookSessionPageState extends State<BookSessionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = widget.arguments;
     final sessionsData = FirebaseFirestore.instance.collection('sessions');
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    // final arguments = ModalRoute.of(context)!.settings.arguments as Map;
     ScreenSize().init(context);
     Future<void> showDialogAndRebuild(Session session) async {
       await showDialog(
@@ -73,13 +75,11 @@ class _BookSessionPageState extends State<BookSessionPage> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon:
-                      Icon(Icons.arrow_back, size: ScreenSize.horizontal! * 8),
+                  icon: Icon(Icons.arrow_back, size: ScreenSize.horizontal! * 8),
                 ),
 
                 Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: ScreenSize.horizontal! * 5),
+                  margin: EdgeInsets.symmetric(horizontal: ScreenSize.horizontal! * 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -143,59 +143,44 @@ class _BookSessionPageState extends State<BookSessionPage> {
                           if (snapshot.hasData) {
                             final tutorSession = snapshot.data!.docs;
                             print(tutorSession[0]["dateTime"]);
-                            for (int i = 0;
-                                i < arguments["tutorSessionsIDs"].length;
-                                i++) {
+                            for (int i = 0; i < arguments["tutorSessionsIDs"].length; i++) {
                               arguments["tutorSessionsIDs"][i] =
-                                  arguments["tutorSessionsIDs"][i]
-                                      .toString()
-                                      .trim();
+                                  arguments["tutorSessionsIDs"][i].toString().trim();
 
                               for (int k = 0; k < tutorSession.length; k++) {
-                                if (arguments["tutorSessionsIDs"][i] ==
-                                    tutorSession[k].id) {
-                                  DateTime tempDateTime = DateTime.parse(
-                                      tutorSession[k]["dateTime"]);
-                                  DateTime timeStart = DateTime.parse(
-                                      tutorSession[k]["timeStart"]);
-                                  DateTime timeEnd = DateTime.parse(
-                                      tutorSession[k]["timeEnd"]);
+                                if (arguments["tutorSessionsIDs"][i] == tutorSession[k].id) {
+                                  DateTime tempDateTime =
+                                      DateTime.parse(tutorSession[k]["dateTime"]);
+                                  DateTime timeStart = DateTime.parse(tutorSession[k]["timeStart"]);
+                                  DateTime timeEnd = DateTime.parse(tutorSession[k]["timeEnd"]);
 
                                   if (bookedSessions[tempDateTime] != null &&
-                                      !checkDuplicateSessions(
-                                          tempDateTime, tutorSession[k].id)) {
+                                      !checkDuplicateSessions(tempDateTime, tutorSession[k].id)) {
                                     bookedSessions[tempDateTime]!.add(
                                       Session(
                                         id: tutorSession[k].id,
                                         dateTime: tempDateTime,
-                                        maxParticipants: tutorSession[k]
-                                            ["maxParticipants"],
-                                        participants: tutorSession[k]
-                                            ["participants"],
+                                        maxParticipants: tutorSession[k]["maxParticipants"],
+                                        participants: tutorSession[k]["participants"],
                                         title: tutorSession[k]["title"],
                                         timeStart: timeStart,
                                         timeEnd: timeEnd,
                                       ),
                                     );
-                                  } else if (bookedSessions[tempDateTime] ==
-                                      null) {
+                                  } else if (bookedSessions[tempDateTime] == null) {
                                     bookedSessions[tempDateTime] = [
                                       Session(
                                         id: tutorSession[k].id,
                                         dateTime: tempDateTime,
-                                        maxParticipants: tutorSession[k]
-                                            ["maxParticipants"],
-                                        participants: tutorSession[k]
-                                            ["participants"],
+                                        maxParticipants: tutorSession[k]["maxParticipants"],
+                                        participants: tutorSession[k]["participants"],
                                         title: tutorSession[k]["title"],
                                         timeStart: timeStart,
                                         timeEnd: timeEnd,
                                       )
                                     ];
-                                  } else if (bookedSessions[tempDateTime] !=
-                                          null &&
-                                      alreadyBooked(
-                                          tutorSession[k]["participants"],
+                                  } else if (bookedSessions[tempDateTime] != null &&
+                                      alreadyBooked(tutorSession[k]["participants"],
                                           bookedSessions[tempDateTime]!)) {
                                     print("${tempDateTime} : already boooked");
                                   }
@@ -204,8 +189,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                 }
                               }
                             }
-                            print(
-                                "bookedSessions length : ${bookedSessions.length}");
+                            print("bookedSessions length : ${bookedSessions.length}");
 
                             return Container(
                               decoration: BoxDecoration(
@@ -213,18 +197,15 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                 color: Colors.white,
                               ),
                               child: Padding(
-                                padding:
-                                    EdgeInsets.all(ScreenSize.horizontal! * 3),
+                                padding: EdgeInsets.all(ScreenSize.horizontal! * 3),
                                 child: TableCalendar(
                                   availableGestures: AvailableGestures.none,
                                   focusedDay: DateTime.now(),
                                   firstDay: DateTime.utc(2023, 3, 1),
                                   lastDay: DateTime.utc(2024, 3, 1),
                                   headerStyle: const HeaderStyle(
-                                      formatButtonVisible: false,
-                                      titleCentered: true),
-                                  selectedDayPredicate: (day) =>
-                                      isSameDay(day, selectDay),
+                                      formatButtonVisible: false, titleCentered: true),
+                                  selectedDayPredicate: (day) => isSameDay(day, selectDay),
                                   onDaySelected: (selectedDay, focusedDay) {
                                     setState(() {
                                       selectDay = selectedDay;
