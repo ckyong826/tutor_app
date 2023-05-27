@@ -1,65 +1,26 @@
 {
   "project_info": {
-    "project_number": "732346116658",
-    "project_id": "volunteer-app-297e2",
-    "storage_bucket": "volunteer-app-297e2.appspot.com"
+    "project_number": "582208935844",
+    "project_id": "volunteer-tutor",
+    "storage_bucket": "volunteer-tutor.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:732346116658:android:d353ee7746bb479c98aa2b",
+        "mobilesdk_app_id": "1:582208935844:android:181adf120a5a0c28619331",
         "android_client_info": {
           "package_name": "com.example.tutor_app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "732346116658-6lmpb4ibdmh1i5fq94jorr9paaf88k5s.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDbkkSDrwZ8gPl-3llAYVuInTEzZXyUPgs"
+          "current_key": "AIzaSyB8kp4VRyUTgRSTP8E-hIUVG0bI8pROJgY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "732346116658-6lmpb4ibdmh1i5fq94jorr9paaf88k5s.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:732346116658:android:c23eaa1c921c841f98aa2b",
-        "android_client_info": {
-          "package_name": "com.example.volunteer_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "732346116658-6lmpb4ibdmh1i5fq94jorr9paaf88k5s.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDbkkSDrwZ8gPl-3llAYVuInTEzZXyUPgs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "732346116658-6lmpb4ibdmh1i5fq94jorr9paaf88k5s.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
