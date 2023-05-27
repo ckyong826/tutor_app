@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tutor_app/utils/find_tutor_components.dart';
 import 'package:tutor_app/utils/size_config.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../utils/home_components.dart';
 
 class SessionsPage extends StatefulWidget {
@@ -15,6 +15,17 @@ class SessionsPage extends StatefulWidget {
 class _SessionsPageState extends State<SessionsPage> {
   @override
   Widget build(BuildContext context) {
+    final sessionsData = FirebaseFirestore.instance.collection('sessions');
+    var studentData;
+
+    FirebaseFirestore.instance
+        .collection('students')
+        .doc("temporarilyIdOnlyLol")
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      studentData = documentSnapshot.data();
+      print(studentData["sessions"][1]);
+    });
     ScreenSize().init(context);
     return Scaffold(
       body: Container(
@@ -34,8 +45,8 @@ class _SessionsPageState extends State<SessionsPage> {
                   height: ScreenSize.vertical! * 3,
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(ScreenSize.horizontal! * 7,
-                      ScreenSize.vertical! * 0.5, 0, 0),
+                  padding: EdgeInsets.fromLTRB(
+                      ScreenSize.horizontal! * 7, ScreenSize.vertical! * 0.5, 0, 0),
                   child: Text(
                     "Sessions",
                     style: TextStyle(
@@ -56,70 +67,32 @@ class _SessionsPageState extends State<SessionsPage> {
                         height: ScreenSize.vertical! * 25,
                         width: ScreenSize.horizontal! * 87,
                         decoration: BoxDecoration(
-                            color: Color(0xff9F9DF3),
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    ScreenSize.horizontal! * 6,
-                                    ScreenSize.vertical! * 2,
-                                    0,
-                                    0),
-                                child: Text(
-                                  "Upcoming",
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 254, 254, 254),
-                                    fontSize: (ScreenSize.vertical! * 3.3),
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
+                            color: Color(0xff9F9DF3), borderRadius: BorderRadius.circular(30)),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                ScreenSize.horizontal! * 6, ScreenSize.vertical! * 2, 0, 0),
+                            child: Text(
+                              "Upcoming",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 254, 254, 254),
+                                fontSize: (ScreenSize.vertical! * 3.3),
+                                fontWeight: FontWeight.w700,
                               ),
-                              SizedBox(
-                                height: ScreenSize.vertical! * 0.1,
-                              ),
-                              Container(
-                                width: ScreenSize.horizontal! * 89,
-                                height: ScreenSize.vertical! * 17,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(children: [
-                                    SizedBox(
-                                      width: ScreenSize.horizontal! * 6,
-                                    ),
-                                    UpcomingCard(
-                                      subject: "Science",
-                                      date: "8/3/2023",
-                                      duration: "9:30-10:00",
-                                    ),
-                                    UpcomingCard(
-                                      subject: "Add Maths",
-                                      date: "8/3/2023",
-                                      duration: "9:30-10:00",
-                                    ),
-                                    UpcomingCard(
-                                      subject: "Chemistry",
-                                      date: "8/3/2023",
-                                      duration: "9:30-10:00",
-                                    ),
-                                    UpcomingCard(
-                                      subject: "Biology",
-                                      date: "8/3/2023",
-                                      duration: "9:30-10:00",
-                                    ),
-                                    UpcomingCard(
-                                      subject: "Sejarah",
-                                      date: "8/3/2023",
-                                      duration: "9:30-10:00",
-                                    ),
-                                    SizedBox(
-                                      width: ScreenSize.horizontal! * 5,
-                                    ),
-                                  ]),
-                                ),
-                              ),
-                            ]),
+                            ),
+                          ),
+                          SizedBox(
+                            height: ScreenSize.vertical! * 0.1,
+                          ),
+                          Container(
+                            width: ScreenSize.horizontal! * 89,
+                            height: ScreenSize.vertical! * 17,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text("hello"),
+                            ),
+                          ),
+                        ]),
                       ),
                       Positioned(
                         top: ScreenSize.vertical! * -2,
