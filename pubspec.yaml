@@ -39,8 +39,8 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   dropdown_button2: ^2.0.0
   dropdown_textfield: ^1.0.8
-  firebase_core: ^2.8.0
-  firebase_auth: ^4.3.0
+  firebase_core: ^2.13.0
+  firebase_auth: ^4.6.1
   cloud_firestore: ^4.4.5
   google_sign_in: ^6.0.2
   table_calendar: ^3.0.8

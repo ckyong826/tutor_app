@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tutor_app/components/GoogleAuth.dart';
 import 'package:tutor_app/pages/loginorsignin.dart';
 import '../main.dart';
@@ -116,7 +117,7 @@ class _SignUpState extends State<SignUp> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text, password: passController.text);
       Navigator.pop(context);
-      Navigator.of(context).pushNamed('/roles');
+      context.go('/ins1/ins2/ins3/options/signup/roles');
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       showErrorMessage(e.code);
@@ -1046,8 +1047,8 @@ class Roles extends StatelessWidget {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            Navigator.of(context)
-                                                .pushNamed('/detailstudent');
+                                            context.go(
+                                                '/ins1/ins2/ins3/options/signup/roles/detailStudent');
                                           },
                                           child: Container(
                                             height: 100,

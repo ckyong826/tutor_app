@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD3wNSn-HgLfug2VxVVuw2LRy7IeJV4XfE',
-    appId: '1:1070852448882:web:e7264ba36faa6fff21d8eb',
-    messagingSenderId: '1070852448882',
-    projectId: 'newbie-tutorapp',
-    authDomain: 'newbie-tutorapp.firebaseapp.com',
-    storageBucket: 'newbie-tutorapp.appspot.com',
-    measurementId: 'G-9YZBESGGJ5',
+    apiKey: 'AIzaSyCrWoLiFME9h3r0y5CqWU94rSj00w08A1M',
+    appId: '1:582208935844:web:be96f6071aac76c1619331',
+    messagingSenderId: '582208935844',
+    projectId: 'volunteer-tutor',
+    authDomain: 'volunteer-tutor.firebaseapp.com',
+    storageBucket: 'volunteer-tutor.appspot.com',
+    measurementId: 'G-2KMK2668T7',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCC11PdS03vcanFlcZJHhoup2Pv-SYWaYc',
-    appId: '1:1070852448882:android:ce20c4f9f0094ade21d8eb',
-    messagingSenderId: '1070852448882',
-    projectId: 'newbie-tutorapp',
-    storageBucket: 'newbie-tutorapp.appspot.com',
+    apiKey: 'AIzaSyB8kp4VRyUTgRSTP8E-hIUVG0bI8pROJgY',
+    appId: '1:582208935844:android:181adf120a5a0c28619331',
+    messagingSenderId: '582208935844',
+    projectId: 'volunteer-tutor',
+    storageBucket: 'volunteer-tutor.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC95xQ-J7_T5rypdvFP8EqFXFDOoEQ9igY',
-    appId: '1:1070852448882:ios:45e2d77e036a2e4c21d8eb',
-    messagingSenderId: '1070852448882',
-    projectId: 'newbie-tutorapp',
-    storageBucket: 'newbie-tutorapp.appspot.com',
-    iosClientId: '1070852448882-6sf9rhjpak5sg26pvn9eas14mf23fdqh.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAtatV-HhB1pTq81wNT1ZJfi6xtEUNE4YY',
+    appId: '1:582208935844:ios:a019ffcb7f8866b7619331',
+    messagingSenderId: '582208935844',
+    projectId: 'volunteer-tutor',
+    storageBucket: 'volunteer-tutor.appspot.com',
+    iosClientId: '582208935844-egdbdjalq17vn8gr7tj54rkameh9cfsv.apps.googleusercontent.com',
     iosBundleId: 'com.example.tutorApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC95xQ-J7_T5rypdvFP8EqFXFDOoEQ9igY',
-    appId: '1:1070852448882:ios:45e2d77e036a2e4c21d8eb',
-    messagingSenderId: '1070852448882',
-    projectId: 'newbie-tutorapp',
-    storageBucket: 'newbie-tutorapp.appspot.com',
-    iosClientId: '1070852448882-6sf9rhjpak5sg26pvn9eas14mf23fdqh.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAtatV-HhB1pTq81wNT1ZJfi6xtEUNE4YY',
+    appId: '1:582208935844:ios:a019ffcb7f8866b7619331',
+    messagingSenderId: '582208935844',
+    projectId: 'volunteer-tutor',
+    storageBucket: 'volunteer-tutor.appspot.com',
+    iosClientId: '582208935844-egdbdjalq17vn8gr7tj54rkameh9cfsv.apps.googleusercontent.com',
     iosBundleId: 'com.example.tutorApp',
   );
 }

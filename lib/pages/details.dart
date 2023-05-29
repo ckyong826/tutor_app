@@ -40,6 +40,7 @@ class _DetailStudent extends State<DetailStudent> {
   ];
   String? dropdownValueLEVEL;
   String? dropdownValueACEDEMIC;
+  List<String> session = [""];
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -452,6 +453,7 @@ class _DetailStudent extends State<DetailStudent> {
                                   level: dropdownValueLEVEL,
                                   school: schoolSTUDENTController.text,
                                   academic: dropdownValueACEDEMIC,
+                                  sessions: session,
                                 );
                                 createStudent(student);
                                 Navigator.of(context).pushNamed('/done');

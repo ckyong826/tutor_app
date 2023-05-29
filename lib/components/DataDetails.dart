@@ -5,7 +5,7 @@ Future createStudent(Student student) async {
   //Reference to document
   final user = FirebaseAuth.instance.currentUser!;
   final email = user.email!;
-  final docUser = FirebaseFirestore.instance.collection('student').doc(email);
+  final docUser = FirebaseFirestore.instance.collection('students').doc(email);
 
   student.id = docUser.id;
   final json = student.toJson();
@@ -20,6 +20,7 @@ class Student {
   final String? level;
   final String school;
   final String? academic;
+  final List<String> sessions;
 
   Student({
     this.id = '',
@@ -27,6 +28,7 @@ class Student {
     required this.level,
     required this.school,
     required this.academic,
+    required this.sessions,
   });
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +36,7 @@ class Student {
         'level': level,
         'school': school,
         'academic': academic,
+        'sessions': sessions,
       };
 }
 
@@ -42,7 +45,7 @@ Future createTutor(Tutor tutor) async {
   //Reference to document
   final user = FirebaseAuth.instance.currentUser!;
   final email = user.email!;
-  final docUser = FirebaseFirestore.instance.collection('tutor').doc(email);
+  final docUser = FirebaseFirestore.instance.collection('tutors').doc(email);
 
   tutor.id = docUser.id;
   final json = tutor.toJson();
