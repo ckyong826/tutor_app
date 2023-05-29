@@ -25,11 +25,11 @@ class _NotesState extends State<Notes> {
     final String subjects = widget.subjects;
 
     final CollectionReference _notes =
-        FirebaseFirestore.instance.collection('/$subjects/category/notes');
+        FirebaseFirestore.instance.collection('/resources/subjects/$subjects/type/notes');
     final CollectionReference _pyq =
-        FirebaseFirestore.instance.collection('/$subjects/category/pyq');
+        FirebaseFirestore.instance.collection('/resources/subjects/$subjects/type/pyq');
     final CollectionReference _videos =
-        FirebaseFirestore.instance.collection('/$subjects/category/videos');
+        FirebaseFirestore.instance.collection('/resources/subjects/$subjects/type/video');
 
     return Scaffold(
       body: Column(
@@ -165,7 +165,7 @@ class _NotesState extends State<Notes> {
                               title: documentSnapshot['title'],
                               tutor: documentSnapshot['tutor'],
                               likes: documentSnapshot['likes'],
-                              downloads: documentSnapshot['download'],
+                              downloads: documentSnapshot['downloads'],
                               subjects: subjects,
                             );
                           });

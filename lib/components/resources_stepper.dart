@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -24,20 +25,20 @@ class _QuestionStepperState extends State<ResourcesStepper> {
   String? selectedLevel;
 
   var resourceCategory = [
-    'Notes',
-    'Pass Year Question',
-    'Video',
+    'notes',
+    'pyq',
+    'video',
   ];
 
   var resourceSubject = [
-    'Bahasa Melayu',
-    'English',
-    'Sejarah',
-    'Mathematics',
-    'Biology',
-    'Physics',
+    'Maths',
     'Chemistry',
-    'Additional Mathematics'
+    'Physic',
+    'Add Math',
+    'Biology',
+    'History',
+    'Music',
+    'Art'
   ];
 
   var resourceLevels = ['PT3', 'SPM', 'UEC', 'IGSCE'];
@@ -142,10 +143,10 @@ class _QuestionStepperState extends State<ResourcesStepper> {
                               description: _description.text,
                               resourceCategory: selectedCategory!,
                               resourceSubject: selectedSubject!,
-                              resourceLevel: selectedLevel!);
+                              resourceLevel: selectedLevel!,);
 
                           // direct back to question posting page
-                          Navigator.pushNamed(context, '/home');
+                          context.go('/resources/categories');
                         },
                         child: const Text('Submit'))),
             ],
@@ -158,10 +159,10 @@ class _QuestionStepperState extends State<ResourcesStepper> {
       required String description,
       required String resourceCategory,
       required String resourceSubject,
-      required String resourceLevel}) async {
+      required String resourceLevel,}) async {
     // reference to document
     final docResource =
-        FirebaseFirestore.instance.collection('resources').doc();
+        FirebaseFirestore.instance.collection('resources/subjects/${resourceSubject.toLowerCase()}/type/$resourceCategory').doc();
 
     // create data using the reference
     final resource = Resource(
@@ -171,6 +172,9 @@ class _QuestionStepperState extends State<ResourcesStepper> {
       resourceCategory: resourceCategory,
       resourceSubject: resourceSubject,
       resourceLevel: resourceLevel,
+      tutor: 'Cikgu Zemin',
+      likes: 0,
+      downloads: 0,
     );
     final json = resource.toJson();
 
