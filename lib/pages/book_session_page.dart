@@ -142,7 +142,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             final tutorSession = snapshot.data!.docs;
-                            print(tutorSession[0]["dateTime"]);
+
                             for (int i = 0; i < arguments["tutorSessionsIDs"].length; i++) {
                               arguments["tutorSessionsIDs"][i] =
                                   arguments["tutorSessionsIDs"][i].toString().trim();
@@ -165,6 +165,8 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                         title: tutorSession[k]["title"],
                                         timeStart: timeStart,
                                         timeEnd: timeEnd,
+                                        tutorName: arguments["tutorName"],
+                                        subject: " ",
                                       ),
                                     );
                                   } else if (bookedSessions[tempDateTime] == null) {
@@ -177,19 +179,16 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                         title: tutorSession[k]["title"],
                                         timeStart: timeStart,
                                         timeEnd: timeEnd,
+                                        tutorName: arguments["tutorName"],
+                                        subject: " ",
                                       )
                                     ];
                                   } else if (bookedSessions[tempDateTime] != null &&
                                       alreadyBooked(tutorSession[k]["participants"],
-                                          bookedSessions[tempDateTime]!)) {
-                                    print("${tempDateTime} : already boooked");
-                                  }
-                                  print(
-                                      "${tutorSession[k].id} : ${tutorSession[k]["participants"].length}");
+                                          bookedSessions[tempDateTime]!)) {}
                                 }
                               }
                             }
-                            print("bookedSessions length : ${bookedSessions.length}");
 
                             return Container(
                               decoration: BoxDecoration(

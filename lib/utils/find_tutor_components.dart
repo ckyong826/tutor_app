@@ -127,7 +127,6 @@ class FindTutorCard extends StatefulWidget {
 class _FindTutorCardState extends State<FindTutorCard> {
   @override
   Widget build(BuildContext context) {
-    print(widget.tutorImage.runtimeType);
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(

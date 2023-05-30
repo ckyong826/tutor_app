@@ -53,6 +53,38 @@ class _FindTutorPageState extends State<FindTutorPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //       tutorData.add({
+                    //         "bio":
+                    //             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                    //         "stars": 4.3,
+                    //         "image":
+                    //             "https://www.nme.com/wp-content/uploads/2022/07/g-dragon-elvis-presley-cant-help-falling-in-love-baz-luhrmann-collaboration-cover.jpg",
+                    //         "level": "SPM",
+                    //         "name": "LaiZM",
+                    //         "rules":
+                    //             "Come in 5 minutes earlier. Ask questions one by one. Inform me earlier if you are unable to attend",
+                    //         "subject": "Physics",
+                    //         "uni": "UMS",
+                    //         "sessions": ["kvVl9pTHOQO0ZXUYHGhf"],
+                    //       });
+                    //     },
+                    //     child: Text("Upload tutor")),
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //       FirebaseFirestore.instance.collection("sessions").add({
+                    //         "subject": "Physics",
+                    //         "dateTime": "2023-06-4 00:00:00.000Z",
+                    //         "maxParticipants": 5,
+                    //         "participants": ["ahsdjkfhasdfj", "asdkjfasjdf", "tuiweiwuiwo"],
+                    //         "timeEnd": "2023-03-15 16:00:00.000Z",
+                    //         "timeStart": "2023-03-15 14:00:00.000Z",
+                    //         "title": "intensive revision with me!"
+                    //       });
+                    //     },
+                    //     child: Text("Upload session")),
+
                     //FIND TUTOR TITLE
                     Text(
                       "Find a tutor",
@@ -136,19 +168,19 @@ class _FindTutorPageState extends State<FindTutorPage> {
                     StreamBuilder(
                       stream: tutorData.snapshots(),
                       builder: (context, snapshot) {
-                        final tutorDocs = snapshot.data!.docs;
-
-                        final List filteredTutors = [];
-                        // Filter tutors by subject and store in filteredTutors
-                        for (int i = 0; i < tutorDocs.length; i++) {
-                          // If tutor subject and level is matching
-                          if (tutorDocs[i]["subject"] == subjectSelected &&
-                              tutorDocs[i]["level"] == dropdownValue) {
-                            // Add the tutor to a List of filteredTutors
-                            filteredTutors.add(tutorDocs[i]);
-                          }
-                        }
                         if (snapshot.hasData) {
+                          final tutorDocs = snapshot.data!.docs;
+
+                          final List filteredTutors = [];
+                          // Filter tutors by subject and store in filteredTutors
+                          for (int i = 0; i < tutorDocs.length; i++) {
+                            // If tutor subject and level is matching
+                            if (tutorDocs[i]["subject"] == subjectSelected &&
+                                tutorDocs[i]["level"] == dropdownValue) {
+                              // Add the tutor to a List of filteredTutors
+                              filteredTutors.add(tutorDocs[i]);
+                            }
+                          }
                           return Expanded(
                             child: ListView.separated(
                                 physics: BouncingScrollPhysics(),
@@ -187,7 +219,7 @@ class _FindTutorPageState extends State<FindTutorPage> {
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -11,6 +11,7 @@ import 'package:tutor_app/pages/find_tutor_page.dart';
 import 'package:tutor_app/pages/instruction.dart';
 import 'package:tutor_app/pages/loginorsignin.dart';
 import 'package:tutor_app/pages/resources_page.dart';
+import 'package:tutor_app/pages/upcoming_sessions.dart';
 import 'package:tutor_app/routes/ScafoldWithBottomNavBar.dart';
 
 import 'Root/profile.dart';
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
     ];
 
     final goRouter = GoRouter(
-        initialLocation: '/',
+        initialLocation: '/sessions',
         navigatorKey: _rootNavigatorKey,
         debugLogDiagnostics: true,
         routes: [
@@ -117,7 +118,11 @@ class MyApp extends StatelessWidget {
                                 child: BookSessionPage(arguments: state.extra),
                               ),
                             )
-                          ])
+                          ]),
+                      GoRoute(
+                        path: 'upcoming_sessions',
+                        builder: (context, state) => const UpcomingPage(),
+                      ),
                     ]),
                 //Resources page
                 GoRoute(
