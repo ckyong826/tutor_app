@@ -117,9 +117,16 @@ class MyApp extends StatelessWidget {
                                                           GoRoute(
                                                             path:
                                                                 'detailStudent',
-                                                            builder: (context,
-                                                                    state) =>
+                                                            builder: (context, state) =>
                                                                 const DetailStudent(),
+                                                            routes: [
+                                                              GoRoute(
+                                                                path: 'welcome',
+                                                                builder: 
+                                                                (context, state) =>
+                                                                  const Welcome(),
+                                                              )
+                                                            ]
                                                           ),
                                                           GoRoute(
                                                             path:
@@ -127,6 +134,14 @@ class MyApp extends StatelessWidget {
                                                             builder: (context,
                                                                     state) =>
                                                                 const DetailTutor(),
+                                                            routes: [
+                                                              GoRoute(
+                                                                path: 'detailsTutor2',
+                                                                builder: 
+                                                                (context, state) =>
+                                                                  const DetailTutor2(),
+                                                              )
+                                                            ]
                                                           )
                                                         ])
                                                   ])

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -456,7 +457,7 @@ class _DetailStudent extends State<DetailStudent> {
                                   sessions: session,
                                 );
                                 createStudent(student);
-                                Navigator.of(context).pushNamed('/done');
+                                context.go('/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -896,8 +897,7 @@ class _DetailTutor extends State<DetailTutor> {
                                     (size.width * 0.75), (size.height * 0.073)),
                               ),
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed('/detailtutor2');
+                                context.go('/ins1/ins2/ins3/options/signup/roles/detailsTutor/detailsTutor2');
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -925,7 +925,7 @@ class _DetailTutor extends State<DetailTutor> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed('/login');
+                                  context.go('/ins1/ins2/ins3/options/login');
                                 },
                                 child: Text(
                                   ' Log In',
@@ -1334,7 +1334,7 @@ class _DetailTutor2 extends State<DetailTutor2> {
                                   result: resultController.text,
                                 );
                                 createTutor(tutor);
-                                Navigator.of(context).pushNamed('/done');
+                                context.go('/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');;
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -1500,7 +1500,7 @@ class _Welcome extends State<Welcome> {
                         SizedBox(height: size.height * 0.02),
                         Center(
                             child: Text(
-                          'Please wait... It may takes about 1day...',
+                          'Please wait... It may takes few minutes...',
                           style: GoogleFonts.nunitoSans(
                             fontWeight: FontWeight.w300,
                             textStyle: const TextStyle(color: colorf2),
@@ -1517,7 +1517,7 @@ class _Welcome extends State<Welcome> {
                                   (size.width * 0.75), (size.height * 0.073)),
                             ),
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/login');
+                              context.go('/home');
                             },
                             child: Text(
                               textAlign: TextAlign.center,
@@ -1545,7 +1545,7 @@ class _Welcome extends State<Welcome> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed('/login');
+                                context.go('/ins1/ins2/ins3/options/login');
                               },
                               child: Text(
                                 ' Log In',
