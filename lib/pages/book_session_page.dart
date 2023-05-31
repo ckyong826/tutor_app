@@ -39,6 +39,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
   @override
   Widget build(BuildContext context) {
     final arguments = widget.arguments;
+    print(arguments["tutorSubject"]);
     final sessionsData = FirebaseFirestore.instance.collection('sessions');
     // final arguments = ModalRoute.of(context)!.settings.arguments as Map;
     ScreenSize().init(context);
@@ -165,23 +166,20 @@ class _BookSessionPageState extends State<BookSessionPage> {
                                         title: tutorSession[k]["title"],
                                         timeStart: timeStart,
                                         timeEnd: timeEnd,
-                                        tutorName: arguments["tutorName"],
-                                        subject: " ",
+                                        tutor: " ",
                                       ),
                                     );
                                   } else if (bookedSessions[tempDateTime] == null) {
                                     bookedSessions[tempDateTime] = [
                                       Session(
-                                        id: tutorSession[k].id,
-                                        dateTime: tempDateTime,
-                                        maxParticipants: tutorSession[k]["maxParticipants"],
-                                        participants: tutorSession[k]["participants"],
-                                        title: tutorSession[k]["title"],
-                                        timeStart: timeStart,
-                                        timeEnd: timeEnd,
-                                        tutorName: arguments["tutorName"],
-                                        subject: " ",
-                                      )
+                                          id: tutorSession[k].id,
+                                          dateTime: tempDateTime,
+                                          maxParticipants: tutorSession[k]["maxParticipants"],
+                                          participants: tutorSession[k]["participants"],
+                                          title: tutorSession[k]["title"],
+                                          timeStart: timeStart,
+                                          timeEnd: timeEnd,
+                                          tutor: " ")
                                     ];
                                   } else if (bookedSessions[tempDateTime] != null &&
                                       alreadyBooked(tutorSession[k]["participants"],

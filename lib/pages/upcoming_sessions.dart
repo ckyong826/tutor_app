@@ -11,6 +11,7 @@ import '../models/session.dart';
 import 'package:tutor_app/utils/book_session_components.dart';
 
 var studentData;
+var tutorData;
 
 class UpcomingPage extends StatefulWidget {
   const UpcomingPage({super.key});
@@ -41,10 +42,11 @@ class _UpcomingPageState extends State<UpcomingPage> {
   }
 
   @override
+  // Get student data and all of tutors data
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await getStudentData();
-      print(studentData["sessions"][0].runtimeType);
+      await getTutorData();
       setState(() {});
     });
     super.initState();
@@ -54,6 +56,11 @@ class _UpcomingPageState extends State<UpcomingPage> {
     final DocumentSnapshot studentDoc =
         await FirebaseFirestore.instance.collection('students').doc("temporarilyIdOnlyLol").get();
     studentData = studentDoc.data();
+  }
+
+  getTutorData() async {
+    QuerySnapshot tutorDoc = await FirebaseFirestore.instance.collection('tutors').get();
+    tutorData = tutorDoc.docs;
   }
 
   @override
@@ -66,9 +73,9 @@ class _UpcomingPageState extends State<UpcomingPage> {
         context: context,
         builder: (context) => PopUpBookingCard(
           session: session,
-          tutorRules: "",
-          tutorImage: "",
-          tutorName: "",
+          tutorRules: session.tutor["rules"],
+          tutorImage: session.tutor["image"],
+          tutorName: session.tutor["name"],
         ),
       ).then((context) => setState(() {}));
     }
@@ -210,6 +217,15 @@ class _UpcomingPageState extends State<UpcomingPage> {
                             DateTime timeStart = DateTime.parse(tutorSession[k]["timeStart"]);
                             DateTime timeEnd = DateTime.parse(tutorSession[k]["timeEnd"]);
 
+                            var currentTutor;
+
+                            for (var tutor in tutorData) {
+                              if (tutor.id == tutorSession[k]["tutorID"]) {
+                                currentTutor = tutor.data();
+                              }
+                            }
+
+                            // print(tutorData["name"]);
                             if (bookedSessions[tempDateTime] != null &&
                                 !checkDuplicateSessions(tempDateTime, tutorSession[k].id)) {
                               bookedSessions[tempDateTime]!.add(
@@ -221,8 +237,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                                   title: tutorSession[k]["title"],
                                   timeStart: timeStart,
                                   timeEnd: timeEnd,
-                                  tutorName: " ",
-                                  subject: " ",
+                                  tutor: currentTutor,
                                 ),
                               );
                             } else if (bookedSessions[tempDateTime] == null) {
@@ -235,8 +250,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                                   title: tutorSession[k]["title"],
                                   timeStart: timeStart,
                                   timeEnd: timeEnd,
-                                  tutorName: " ",
-                                  subject: " ",
+                                  tutor: currentTutor,
                                 )
                               ];
                             } else if (bookedSessions[tempDateTime] != null &&
@@ -305,8 +319,8 @@ class _UpcomingPageState extends State<UpcomingPage> {
                 SizedBox(
                   height: ScreenSize.vertical! * 2,
                 ),
-                ..._getSessionsfromDay(selectDay).map(
-                  (Session session) => GestureDetector(
+                ..._getSessionsfromDay(selectDay).map((Session session) {
+                  return GestureDetector(
                     onTap: () => showDialogAndRebuild(session),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -315,11 +329,11 @@ class _UpcomingPageState extends State<UpcomingPage> {
                       child: AvailableSessionCard(
                         session: session,
                         selectDay: selectDay,
-                        tutorName: " ",
+                        tutorName: session.tutor["name"],
                       ),
                     ),
-                  ),
-                ),
+                  );
+                }),
                 SizedBox(
                   height: ScreenSize.vertical! * 3,
                 ),

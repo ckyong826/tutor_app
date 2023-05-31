@@ -6,8 +6,7 @@ class Session {
   final String title;
   final DateTime timeStart;
   final DateTime timeEnd;
-  final String tutorName;
-  final String subject;
+  final tutor;
   Session({
     required this.id,
     required this.dateTime,
@@ -16,7 +15,6 @@ class Session {
     required this.title,
     required this.timeStart,
     required this.timeEnd,
-    required this.tutorName,
-    required this.subject,
+    required this.tutor,
   });
 }
