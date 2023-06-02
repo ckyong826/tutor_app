@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tutor_app/components/GoogleAuth.dart';
 import 'package:tutor_app/pages/loginorsignin.dart';
@@ -15,6 +16,8 @@ import '../firebase_options.dart';
 import '../Root/home_page.dart';
 import 'components/Co-badge.dart';
 import 'components/Co-stat.dart';
+import 'package:tutor_app/components/DataDetails.dart';
+import 'components/readUserData.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

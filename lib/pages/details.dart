@@ -22,6 +22,11 @@ bool isValid = false;
 bool printValid = false;
 String? dropdownValueLEVEL;
 String? dropdownValueACEDEMIC;
+String biotext = "";
+const String imagetext = "";
+const String rulestext = "";
+const double starstext = 0;
+final List<String> sessionstext = [""];
 
 //Detail Student
 class DetailStudent extends StatefulWidget {
@@ -457,7 +462,8 @@ class _DetailStudent extends State<DetailStudent> {
                                   sessions: session,
                                 );
                                 createStudent(student);
-                                context.go('/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');
+                                context.go(
+                                    '/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -897,7 +903,8 @@ class _DetailTutor extends State<DetailTutor> {
                                     (size.width * 0.75), (size.height * 0.073)),
                               ),
                               onPressed: () {
-                                context.go('/ins1/ins2/ins3/options/signup/roles/detailsTutor/detailsTutor2');
+                                context.go(
+                                    '/ins1/ins2/ins3/options/signup/roles/detailsTutor/detailsTutor2');
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -1332,9 +1339,16 @@ class _DetailTutor2 extends State<DetailTutor2> {
                                   name: nameController.text,
                                   subject: selectedItems,
                                   result: resultController.text,
+                                  bio: biotext,
+                                  image: imagetext,
+                                  rules: rulestext,
+                                  stars: starstext,
+                                  sessions: sessionstext,
                                 );
                                 createTutor(tutor);
-                                context.go('/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');;
+                                context.go(
+                                    '/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');
+                                ;
                               },
                               child: Text(
                                 textAlign: TextAlign.center,

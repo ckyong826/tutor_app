@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'readUserData.dart';
 
 class CoProfile extends StatefulWidget {
   final String userName;
@@ -37,17 +38,17 @@ class _CoProfileState extends State<CoProfile> {
         SizedBox(
           height: size.height * 0.01,
         ),
+        //UserName
         Container(
-          padding: const EdgeInsets.only(left: 10),
-          child: Text(
-            widget.userName,
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w700,
-              color: const Color(0xff26273C),
-              fontSize: size.height * 0.05,
-            ),
-          ),
-        ),
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              widget.userName,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w700,
+                color: const Color(0xff26273C),
+                fontSize: size.height * 0.05,
+              ),
+            )),
         SizedBox(
           height: size.height * 0.003,
         ),
