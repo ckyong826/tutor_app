@@ -66,7 +66,7 @@ class LoginorSignin extends StatelessWidget {
                   fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
                 ),
                 onPressed: () {
-                  context.go('/home');
+                  context.go('/ins1/ins2/ins3/options/login');
                 },
                 child: Text(
                   'LOG IN',
@@ -89,7 +89,7 @@ class LoginorSignin extends StatelessWidget {
                   side: const BorderSide(color: pricolor, width: 2),
                 ),
                 onPressed: () {
-                  context.go('/home');
+                  context.go('/ins1/ins2/ins3/options/signup');
                 },
                 child: Text(
                   'SIGN UP',

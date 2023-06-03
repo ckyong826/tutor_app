@@ -281,7 +281,7 @@ class Ins3 extends StatelessWidget {
               fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
             ),
             onPressed: () {
-              context.go('/ins1/ins2/ins3/login');
+              context.go('/ins1/ins2/ins3/options');
             },
             child: Text(
               textAlign: TextAlign.center,

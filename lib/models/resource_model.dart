@@ -6,6 +6,10 @@ class Resource {
   final String resourceCategory;
   final String resourceSubject;
   final String resourceLevel;
+  final String tutor;
+  final int likes;
+  final int downloads;
+
 
   Resource({
     this.id = '',
@@ -13,7 +17,11 @@ class Resource {
     required this.description,
     required this.resourceCategory,
     required this.resourceSubject,
-    required this.resourceLevel,
+    required this.resourceLevel, 
+    required this.tutor, 
+    required this.likes, 
+    required this.downloads, 
+
   });
 
   Map<String, dynamic> toJson() => {
@@ -23,6 +31,10 @@ class Resource {
         'resourceCategory': resourceCategory,
         'resourceSubject': resourceSubject,
         'resourceLevel': resourceLevel,
+        'tutor': tutor,
+        'likes': likes,
+        'downloads': downloads,
+
       };
 
   static Resource fromJson(Map<String, dynamic> json) =>
@@ -31,5 +43,8 @@ class Resource {
         description: json['description'],
         resourceCategory: json['resourceCategory'], 
         resourceSubject: json['resourceSubject'], 
-        resourceLevel: json['resourceLevel']);
+        resourceLevel: json['resourceLevel'],
+        tutor: json['tutor'],
+        likes: json['likes'],
+        downloads: json['downloads'],);
 }

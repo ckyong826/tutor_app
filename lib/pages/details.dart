@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../components/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,6 +22,11 @@ bool isValid = false;
 bool printValid = false;
 String? dropdownValueLEVEL;
 String? dropdownValueACEDEMIC;
+String biotext = "";
+const String imagetext = "";
+const String rulestext = "";
+const double starstext = 0;
+final List<String> sessionstext = [""];
 
 //Detail Student
 class DetailStudent extends StatefulWidget {
@@ -40,6 +46,7 @@ class _DetailStudent extends State<DetailStudent> {
   ];
   String? dropdownValueLEVEL;
   String? dropdownValueACEDEMIC;
+  List<String> session = [""];
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -452,9 +459,11 @@ class _DetailStudent extends State<DetailStudent> {
                                   level: dropdownValueLEVEL,
                                   school: schoolSTUDENTController.text,
                                   academic: dropdownValueACEDEMIC,
+                                  sessions: session,
                                 );
                                 createStudent(student);
-                                Navigator.of(context).pushNamed('/done');
+                                context.go(
+                                    '/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -894,8 +903,8 @@ class _DetailTutor extends State<DetailTutor> {
                                     (size.width * 0.75), (size.height * 0.073)),
                               ),
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed('/detailtutor2');
+                                context.go(
+                                    '/ins1/ins2/ins3/options/signup/roles/detailsTutor/detailsTutor2');
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -923,7 +932,7 @@ class _DetailTutor extends State<DetailTutor> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed('/login');
+                                  context.go('/ins1/ins2/ins3/options/login');
                                 },
                                 child: Text(
                                   ' Log In',
@@ -1330,9 +1339,16 @@ class _DetailTutor2 extends State<DetailTutor2> {
                                   name: nameController.text,
                                   subject: selectedItems,
                                   result: resultController.text,
+                                  bio: biotext,
+                                  image: imagetext,
+                                  rules: rulestext,
+                                  stars: starstext,
+                                  sessions: sessionstext,
                                 );
                                 createTutor(tutor);
-                                Navigator.of(context).pushNamed('/done');
+                                context.go(
+                                    '/ins1/ins2/ins3/options/signup/roles/detailStudent/welcome');
+                                ;
                               },
                               child: Text(
                                 textAlign: TextAlign.center,
@@ -1498,7 +1514,7 @@ class _Welcome extends State<Welcome> {
                         SizedBox(height: size.height * 0.02),
                         Center(
                             child: Text(
-                          'Please wait... It may takes about 1day...',
+                          'Please wait... It may takes few minutes...',
                           style: GoogleFonts.nunitoSans(
                             fontWeight: FontWeight.w300,
                             textStyle: const TextStyle(color: colorf2),
@@ -1515,7 +1531,7 @@ class _Welcome extends State<Welcome> {
                                   (size.width * 0.75), (size.height * 0.073)),
                             ),
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/login');
+                              context.go('/home');
                             },
                             child: Text(
                               textAlign: TextAlign.center,
@@ -1543,7 +1559,7 @@ class _Welcome extends State<Welcome> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed('/login');
+                                context.go('/ins1/ins2/ins3/options/login');
                               },
                               child: Text(
                                 ' Log In',

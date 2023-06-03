@@ -7,14 +7,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:tutor_app/Root/home_page.dart';
 import 'package:tutor_app/Root/sessions_page.dart';
 import 'package:tutor_app/pages/book_session_page.dart';
+import 'package:tutor_app/pages/details.dart';
 import 'package:tutor_app/pages/find_tutor_page.dart';
 import 'package:tutor_app/pages/instruction.dart';
 import 'package:tutor_app/pages/loginorsignin.dart';
 import 'package:tutor_app/pages/resources_page.dart';
-import 'package:tutor_app/pages/upcoming_sessions.dart';
 import 'package:tutor_app/routes/ScafoldWithBottomNavBar.dart';
-
-import 'Root/profile.dart';
+import 'profile/profile.dart';
+import 'package:tutor_app/pages/upcoming_sessions.dart';
+import 'package:tutor_app/pages/signin.dart';
 import 'Root/resources.dart';
 import 'Screen/Resources/categories.dart';
 import 'Screen/Resources/detailed_posting.dart';
@@ -84,9 +85,44 @@ class MyApp extends StatelessWidget {
                         GoRoute(path: 'ins2', builder: (context, state) => const Ins2(), routes: [
                           GoRoute(path: 'ins3', builder: (context, state) => const Ins3(), routes: [
                             GoRoute(
-                              path: 'login',
-                              builder: (context, state) => const LoginorSignin(),
-                            )
+                                path: 'options',
+                                builder: (context, state) => const LoginorSignin(),
+                                routes: [
+                                  GoRoute(
+                                    path: 'login',
+                                    builder: (context, state) => const LogIn(),
+                                  ),
+                                  GoRoute(
+                                      path: 'signup',
+                                      builder: (context, state) => const SignUp(),
+                                      routes: [
+                                        GoRoute(
+                                            path: 'roles',
+                                            builder: (context, state) => Roles(),
+                                            routes: [
+                                              GoRoute(
+                                                  path: 'detailStudent',
+                                                  builder: (context, state) =>
+                                                      const DetailStudent(),
+                                                  routes: [
+                                                    GoRoute(
+                                                      path: 'welcome',
+                                                      builder: (context, state) => const Welcome(),
+                                                    )
+                                                  ]),
+                                              GoRoute(
+                                                  path: 'detailsTutor',
+                                                  builder: (context, state) => const DetailTutor(),
+                                                  routes: [
+                                                    GoRoute(
+                                                      path: 'detailsTutor2',
+                                                      builder: (context, state) =>
+                                                          const DetailTutor2(),
+                                                    )
+                                                  ])
+                                            ])
+                                      ])
+                                ])
                           ])
                         ])
                       ])

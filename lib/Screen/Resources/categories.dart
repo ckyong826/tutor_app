@@ -380,6 +380,15 @@ class _CategoriesState extends State<Categories> {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go('/resources/categories/notes/$subjects/add');
+        },
+        backgroundColor: Color(0XFF9F9DF3),
+        child: const Icon(
+          Icons.add,
+        ),
+      ),
     );
   }
 }
