@@ -142,7 +142,9 @@ class _UpcomingPageState extends State<UpcomingPage> {
                               child: StreamBuilder(
                                 stream: sessionsData.snapshots(),
                                 builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
+                                  if (snapshot.hasData &&
+                                      studentData != null &&
+                                      tutorData != null) {
                                     List sessionsJoined = [];
                                     final sessionDocs = snapshot.data!.docs;
 
@@ -208,7 +210,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                 StreamBuilder(
                   stream: sessionsData.snapshots(),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData && studentData != null && tutorData != null) {
                       final tutorSession = snapshot.data!.docs;
 
                       for (int i = 0; i < studentData["sessions"].length; i++) {

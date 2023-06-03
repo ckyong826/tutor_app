@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
     ];
 
     final goRouter = GoRouter(
-        initialLocation: '/sessions',
+        initialLocation: '/',
         navigatorKey: _rootNavigatorKey,
         debugLogDiagnostics: true,
         routes: [

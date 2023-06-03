@@ -106,7 +106,7 @@ class _SessionsPageState extends State<SessionsPage> {
                                 child: StreamBuilder(
                                   stream: sessionsData.snapshots(),
                                   builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
+                                    if (snapshot.hasData && studentData != null) {
                                       List sessionsJoined = [];
                                       final sessionDocs = snapshot.data!.docs;
 
