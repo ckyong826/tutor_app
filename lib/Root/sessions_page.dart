@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:tutor_app/utils/find_tutor_components.dart';
 import 'package:tutor_app/utils/size_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../utils/home_components.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+var studentData;
+var userID;
 
 class SessionsPage extends StatefulWidget {
   const SessionsPage({super.key});
@@ -14,18 +21,32 @@ class SessionsPage extends StatefulWidget {
 
 class _SessionsPageState extends State<SessionsPage> {
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUserEmail();
+      await getStudentData();
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  getStudentData() async {
+    final DocumentSnapshot studentDoc =
+        await FirebaseFirestore.instance.collection('students').doc(userID).get();
+    studentData = studentDoc.data();
+  }
+
+  getUserEmail() async {
+    userID = await FirebaseAuth.instance.currentUser!.email;
+    setState(() {
+      print(userID);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final sessionsData = FirebaseFirestore.instance.collection('sessions');
-    var studentData;
 
-    FirebaseFirestore.instance
-        .collection('students')
-        .doc("temporarilyIdOnlyLol")
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      studentData = documentSnapshot.data();
-      print(studentData["sessions"][1]);
-    });
     ScreenSize().init(context);
     return Scaffold(
       body: Container(
@@ -62,37 +83,91 @@ class _SessionsPageState extends State<SessionsPage> {
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      Container(
-                        // PURPLE CONTAINER
-                        height: ScreenSize.vertical! * 25,
-                        width: ScreenSize.horizontal! * 87,
-                        decoration: BoxDecoration(
-                            color: Color(0xff9F9DF3), borderRadius: BorderRadius.circular(30)),
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                ScreenSize.horizontal! * 6, ScreenSize.vertical! * 2, 0, 0),
-                            child: Text(
-                              "Upcoming",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 254, 254, 254),
-                                fontSize: (ScreenSize.vertical! * 3.3),
-                                fontWeight: FontWeight.w700,
+                      GestureDetector(
+                        onTap: () {
+                          context.go('/sessions/upcoming_sessions');
+                        },
+                        child: Container(
+                          // PURPLE CONTAINER
+                          height: ScreenSize.vertical! * 25,
+                          width: ScreenSize.horizontal! * 87,
+                          decoration: BoxDecoration(
+                              color: Color(0xff9F9DF3), borderRadius: BorderRadius.circular(30)),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  ScreenSize.horizontal! * 6, ScreenSize.vertical! * 2, 0, 0),
+                              child: Text(
+                                "Upcoming",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 254, 254, 254),
+                                  fontSize: (ScreenSize.vertical! * 3.3),
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: ScreenSize.vertical! * 0.1,
-                          ),
-                          Container(
-                            width: ScreenSize.horizontal! * 89,
-                            height: ScreenSize.vertical! * 17,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Text("hello"),
+                            SizedBox(
+                              height: ScreenSize.vertical! * 0.5,
                             ),
-                          ),
-                        ]),
+                            Center(
+                              child: Container(
+                                width: ScreenSize.horizontal! * 85,
+                                height: ScreenSize.vertical! * 17,
+                                child: StreamBuilder(
+                                  stream: sessionsData.snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData && studentData != null) {
+                                      List sessionsJoined = [];
+                                      final sessionDocs = snapshot.data!.docs;
+
+                                      // Filter out the sessions that the student joined
+                                      for (int i = 0; i < sessionDocs.length; i++) {
+                                        for (var sessionId in studentData["sessions"]) {
+                                          if (sessionId == sessionDocs[i].id) {
+                                            sessionsJoined.add(sessionDocs[i]);
+                                          }
+                                        }
+                                      }
+
+                                      return ListView.separated(
+                                          physics: BouncingScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            final dateObj =
+                                                DateTime.parse(sessionsJoined[index]["dateTime"]);
+                                            final timeStartObj =
+                                                DateTime.parse(sessionsJoined[index]["timeStart"]);
+                                            final timeEndObj =
+                                                DateTime.parse(sessionsJoined[index]["timeEnd"]);
+
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                left: ScreenSize.horizontal! * 1.5,
+                                                bottom: ScreenSize.horizontal! * 1,
+                                              ),
+                                              child: UpcomingCard(
+                                                  subject: sessionsJoined[index]["subject"],
+                                                  date: DateFormat("yyyy-MM-dd").format(dateObj),
+                                                  duration:
+                                                      "${DateFormat("hh:mm").format(timeStartObj)} - ${DateFormat("hh:mm").format(timeEndObj)}"),
+                                            );
+                                          },
+                                          separatorBuilder: (context, index) => SizedBox(
+                                                height: ScreenSize.horizontal! * 0,
+                                              ),
+                                          itemCount: sessionsJoined.length);
+                                    } else {
+                                      return SpinKitRing(
+                                        color: Color(0xff66B6FF),
+                                        size: ScreenSize.vertical! * 10,
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
                       ),
                       Positioned(
                         top: ScreenSize.vertical! * -2,

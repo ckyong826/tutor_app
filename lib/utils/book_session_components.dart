@@ -1,15 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../models/session.dart';
 import '../utils/size_config.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PopUpBookingCard extends StatefulWidget {
   final Session session;
   final String tutorRules;
   final String tutorImage;
   final String tutorName;
+  final String cardType;
 
   const PopUpBookingCard({
     super.key,
@@ -17,6 +20,7 @@ class PopUpBookingCard extends StatefulWidget {
     required this.tutorRules,
     required this.tutorImage,
     required this.tutorName,
+    required this.cardType,
   });
 
   @override
@@ -25,9 +29,17 @@ class PopUpBookingCard extends StatefulWidget {
 
 class _PopUpBookingCardState extends State<PopUpBookingCard> {
   late int numParticipants = widget.session.participants.length;
+  var userID;
+  void getUserEmail() async {
+    userID = await FirebaseAuth.instance.currentUser!.email;
+    setState(() {
+      print(userID);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String userID = "temporarilyIdOnlyLol";
+    getUserEmail();
     final timeStart = DateFormat("h:mma").format(widget.session.timeStart);
     final timeEnd = DateFormat("h:mma").format(widget.session.timeEnd);
     return AlertDialog(
@@ -107,56 +119,72 @@ class _PopUpBookingCardState extends State<PopUpBookingCard> {
             height: ScreenSize.vertical! * 2,
           ),
           Container(
-            width: ScreenSize.horizontal! * 30,
-            child: (widget.session.participants.contains(userID))
+              width: ScreenSize.horizontal! * 30,
+              child: (widget.cardType == "booking_page")
+                  ? (widget.session.participants.contains(userID))
 
-                // If student already joined, show JOINED button
-                ? ElevatedButton(
-                    child: Text(
-                      "JOINED",
-                      style: TextStyle(fontSize: ScreenSize.horizontal! * 5),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff9F9DF3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    onPressed: null,
-                  )
-                // If student havent joined, show JOIN button
-                : ElevatedButton(
-                    onPressed: () {
-                      // Save the student id in sessions collection
-                      FirebaseFirestore.instance
-                          .collection('sessions')
-                          .doc(widget.session.id)
-                          .update({
-                        "participants": FieldValue.arrayUnion([userID])
-                      });
+                      // If student already joined, show JOINED button
+                      ? ElevatedButton(
+                          child: Text(
+                            "JOINED",
+                            style: TextStyle(fontSize: ScreenSize.horizontal! * 5),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff9F9DF3),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: null,
+                        )
+                      // If student havent joined, show JOIN button
+                      : ElevatedButton(
+                          onPressed: () {
+                            // Save the student id in sessions collection
+                            FirebaseFirestore.instance
+                                .collection('sessions')
+                                .doc(widget.session.id)
+                                .update({
+                              "participants": FieldValue.arrayUnion([userID])
+                            });
 
-                      // Save the session id in students collection
-                      FirebaseFirestore.instance.collection('students').doc(userID).update({
-                        "sessions": FieldValue.arrayUnion([widget.session.id])
-                      });
+                            // Save the session id in students collection
+                            FirebaseFirestore.instance.collection('students').doc(userID).update({
+                              "sessions": FieldValue.arrayUnion([widget.session.id])
+                            });
 
-                      // Pop three times until FindTutorPage
-                      context.pop();
-                      context.pop();
-                      context.pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff9F9DF3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      "JOIN",
-                      style: TextStyle(fontSize: ScreenSize.horizontal! * 5),
-                    ),
-                  ),
-          ),
+                            // Pop three times until FindTutorPage
+                            context.pop();
+                            context.pop();
+                            context.pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff9F9DF3),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text(
+                            "JOIN",
+                            style: TextStyle(fontSize: ScreenSize.horizontal! * 5),
+                          ),
+                        )
+                  : (widget.cardType == "upcoming_page")
+                      ? ElevatedButton(
+                          child: Text(
+                            "JOIN MEETING",
+                            style: TextStyle(fontSize: ScreenSize.horizontal! * 5),
+                            textAlign: TextAlign.center,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff9F9DF3),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {},
+                        )
+                      : Text("no cardType chosen"))
         ],
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

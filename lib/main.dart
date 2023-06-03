@@ -12,10 +12,10 @@ import 'package:tutor_app/pages/find_tutor_page.dart';
 import 'package:tutor_app/pages/instruction.dart';
 import 'package:tutor_app/pages/loginorsignin.dart';
 import 'package:tutor_app/pages/resources_page.dart';
-import 'package:tutor_app/pages/signin.dart';
 import 'package:tutor_app/routes/ScafoldWithBottomNavBar.dart';
 import 'profile/profile.dart';
-
+import 'package:tutor_app/pages/upcoming_sessions.dart';
+import 'package:tutor_app/pages/signin.dart';
 import 'Root/resources.dart';
 import 'Screen/Resources/categories.dart';
 import 'Screen/Resources/detailed_posting.dart';
@@ -81,74 +81,51 @@ class MyApp extends StatelessWidget {
                           child: const Firstp(),
                         ),
                     routes: [
-                      GoRoute(
-                          path: 'ins1',
-                          builder: (context, state) => const Ins1(),
-                          routes: [
+                      GoRoute(path: 'ins1', builder: (context, state) => const Ins1(), routes: [
+                        GoRoute(path: 'ins2', builder: (context, state) => const Ins2(), routes: [
+                          GoRoute(path: 'ins3', builder: (context, state) => const Ins3(), routes: [
                             GoRoute(
-                                path: 'ins2',
-                                builder: (context, state) => const Ins2(),
+                                path: 'options',
+                                builder: (context, state) => const LoginorSignin(),
                                 routes: [
                                   GoRoute(
-                                      path: 'ins3',
-                                      builder: (context, state) => const Ins3(),
+                                    path: 'login',
+                                    builder: (context, state) => const LogIn(),
+                                  ),
+                                  GoRoute(
+                                      path: 'signup',
+                                      builder: (context, state) => const SignUp(),
                                       routes: [
                                         GoRoute(
-                                            path: 'options',
-                                            builder: (context, state) =>
-                                                const LoginorSignin(),
+                                            path: 'roles',
+                                            builder: (context, state) => Roles(),
                                             routes: [
                                               GoRoute(
-                                                path: 'login',
-                                                builder: (context, state) =>
-                                                    const LogIn(),
-                                              ),
-                                              GoRoute(
-                                                  path: 'signup',
+                                                  path: 'detailStudent',
                                                   builder: (context, state) =>
-                                                      const SignUp(),
+                                                      const DetailStudent(),
                                                   routes: [
                                                     GoRoute(
-                                                        path: 'roles',
-                                                        builder:
-                                                            (context, state) =>
-                                                                Roles(),
-                                                        routes: [
-                                                          GoRoute(
-                                                            path:
-                                                                'detailStudent',
-                                                            builder: (context, state) =>
-                                                                const DetailStudent(),
-                                                            routes: [
-                                                              GoRoute(
-                                                                path: 'welcome',
-                                                                builder: 
-                                                                (context, state) =>
-                                                                  const Welcome(),
-                                                              )
-                                                            ]
-                                                          ),
-                                                          GoRoute(
-                                                            path:
-                                                                'detailsTutor',
-                                                            builder: (context,
-                                                                    state) =>
-                                                                const DetailTutor(),
-                                                            routes: [
-                                                              GoRoute(
-                                                                path: 'detailsTutor2',
-                                                                builder: 
-                                                                (context, state) =>
-                                                                  const DetailTutor2(),
-                                                              )
-                                                            ]
-                                                          )
-                                                        ])
+                                                      path: 'welcome',
+                                                      builder: (context, state) => const Welcome(),
+                                                    )
+                                                  ]),
+                                              GoRoute(
+                                                  path: 'detailsTutor',
+                                                  builder: (context, state) => const DetailTutor(),
+                                                  routes: [
+                                                    GoRoute(
+                                                      path: 'detailsTutor2',
+                                                      builder: (context, state) =>
+                                                          const DetailTutor2(),
+                                                    )
                                                   ])
                                             ])
                                       ])
                                 ])
                           ])
+                        ])
+                      ])
                     ]),
                 //Home page
                 GoRoute(
@@ -177,7 +154,11 @@ class MyApp extends StatelessWidget {
                                 child: BookSessionPage(arguments: state.extra),
                               ),
                             )
-                          ])
+                          ]),
+                      GoRoute(
+                        path: 'upcoming_sessions',
+                        builder: (context, state) => const UpcomingPage(),
+                      ),
                     ]),
                 //Resources page
                 GoRoute(
@@ -202,29 +183,24 @@ class MyApp extends StatelessWidget {
                                   ),
                                   GoRoute(
                                     path: 'add',
-                                    builder: (context, state) =>
-                                        const PostResources(),
+                                    builder: (context, state) => const PostResources(),
                                   )
                                 ])
                           ]),
-                      GoRoute(
-                          path: 'forum',
-                          builder: (context, state) => const Forum(),
-                          routes: [
-                            GoRoute(
-                              path: 'post',
-                              builder: (context, state) => const PostQuestion(),
-                            ),
-                            GoRoute(
-                              path: 'comment/:id/:title/:description',
-                              builder: (context, state) => DetailedPost(
-                                questionId: state.params['id']!,
-                                questionTitle: state.params['title']!,
-                                questionDescription:
-                                    state.params['description']!,
-                              ),
-                            )
-                          ])
+                      GoRoute(path: 'forum', builder: (context, state) => const Forum(), routes: [
+                        GoRoute(
+                          path: 'post',
+                          builder: (context, state) => const PostQuestion(),
+                        ),
+                        GoRoute(
+                          path: 'comment/:id/:title/:description',
+                          builder: (context, state) => DetailedPost(
+                            questionId: state.params['id']!,
+                            questionTitle: state.params['title']!,
+                            questionDescription: state.params['description']!,
+                          ),
+                        )
+                      ])
                     ]),
                 //Profile page
                 GoRoute(
