@@ -76,30 +76,30 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 TutorCard(
                                   imageUrl:
-                                      "https://scontent.fbki2-1.fna.fbcdn.net/v/t1.6435-9/31817390_1448910555255518_2611503638257860608_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=174925&_nc_ohc=g7MjU0O5fcQAX_KfQh_&_nc_oc=AQlCEcxjEpQ17T2596EF2lxNlIfzv_tlLTaFczvUEc5aEDgJEXFn7-NlEErIK6EVwm4jYj3cMvsj7fOJVx2hFu31&_nc_ht=scontent.fbki2-1.fna&oh=00_AfB_prGPm-4vvV8LjyNvdxRX8Hx8Kj4aHSMfMHHnhieh8A&oe=642AE9A8",
+                                      "https://images.pexels.com/photos/277012/pexels-photo-277012.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
                                   name: "Mango Tan",
                                   subject: "Moral",
                                   stars: 1,
                                 ),
                                 TutorCard(
                                   imageUrl:
-                                      "https://scontent.fbki2-1.fna.fbcdn.net/v/t39.30808-6/327723964_502352292055817_86326846560433633_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=biMVGfsYXngAX9J-UCG&_nc_ht=scontent.fbki2-1.fna&oh=00_AfAY4eeHl_KhNZW0_YxCj-adIxtMiyQr0FYUppFnVaPVVA&oe=6408016F",
-                                  name: "Cgay",
-                                  subject: "Fashion",
+                                      "https://images.pexels.com/photos/16791971/pexels-photo-16791971/free-photo-of-city-road-fashion-people.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                                  name: "Ck",
+                                  subject: "Science",
                                   stars: 1.6,
                                 ),
                                 TutorCard(
                                   imageUrl:
-                                      "https://apicms.thestar.com.my/uploads/images/2022/01/19/1450137.jpg",
-                                  name: "Lee Zii Jia",
-                                  subject: "Football",
+                                      "https://images.pexels.com/photos/698547/pexels-photo-698547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                                  name: "Lee Zi Jia",
+                                  subject: "Chemistry",
                                   stars: 5,
                                 ),
                                 TutorCard(
                                   imageUrl:
-                                      "https://apicms.thestar.com.my/uploads/images/2022/01/19/1450137.jpg",
-                                  name: "Lee Zii Jia",
-                                  subject: "Football",
+                                      "https://images.pexels.com/photos/1006073/pexels-photo-1006073.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                                  name: "Cherry",
+                                  subject: "Biology",
                                   stars: 5,
                                 ),
                               ],
@@ -181,14 +181,14 @@ class _HomePageState extends State<HomePage> {
                         ResourcesCard(
                             title: "SPM A++ Chemistry Notes",
                             tutor: "Cikgu Zemin",
-                            likes: 200,
-                            downloads: 200),
+                            likes: 20,
+                            downloads: 5),
                         SizedBox(height: 15),
                         ResourcesCard(
-                            title: "SPM A++ Chemistry Notes",
+                            title: "Add Maths Intensive Notes",
                             tutor: "Cikgu Zemin",
-                            likes: 200,
-                            downloads: 200),
+                            likes: 16,
+                            downloads: 2),
                         SizedBox(height: 15),
                         ResourcesCard(
                             title: "SPM A++ Chemistry Notes",

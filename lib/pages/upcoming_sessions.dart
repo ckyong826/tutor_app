@@ -9,7 +9,9 @@ import '../utils/home_components.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../models/session.dart';
 import 'package:tutor_app/utils/book_session_components.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+var userID;
 var studentData;
 var tutorData;
 
@@ -45,6 +47,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
   // Get student data and all of tutors data
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUserEmail();
       await getStudentData();
       await getTutorData();
       setState(() {});
@@ -54,13 +57,20 @@ class _UpcomingPageState extends State<UpcomingPage> {
 
   getStudentData() async {
     final DocumentSnapshot studentDoc =
-        await FirebaseFirestore.instance.collection('students').doc("temporarilyIdOnlyLol").get();
+        await FirebaseFirestore.instance.collection('students').doc(userID).get();
     studentData = studentDoc.data();
   }
 
   getTutorData() async {
     QuerySnapshot tutorDoc = await FirebaseFirestore.instance.collection('tutors').get();
     tutorData = tutorDoc.docs;
+  }
+
+  getUserEmail() async {
+    userID = await FirebaseAuth.instance.currentUser!.email;
+    setState(() {
+      print(userID);
+    });
   }
 
   @override

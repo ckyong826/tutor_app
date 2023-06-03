@@ -7,8 +7,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../utils/home_components.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 var studentData;
+var userID;
 
 class SessionsPage extends StatefulWidget {
   const SessionsPage({super.key});
@@ -21,6 +23,7 @@ class _SessionsPageState extends State<SessionsPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUserEmail();
       await getStudentData();
       setState(() {});
     });
@@ -29,8 +32,15 @@ class _SessionsPageState extends State<SessionsPage> {
 
   getStudentData() async {
     final DocumentSnapshot studentDoc =
-        await FirebaseFirestore.instance.collection('students').doc("temporarilyIdOnlyLol").get();
+        await FirebaseFirestore.instance.collection('students').doc(userID).get();
     studentData = studentDoc.data();
+  }
+
+  getUserEmail() async {
+    userID = await FirebaseAuth.instance.currentUser!.email;
+    setState(() {
+      print(userID);
+    });
   }
 
   @override

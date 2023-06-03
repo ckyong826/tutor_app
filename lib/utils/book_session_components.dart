@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../models/session.dart';
 import '../utils/size_config.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PopUpBookingCard extends StatefulWidget {
   final Session session;
@@ -27,9 +29,17 @@ class PopUpBookingCard extends StatefulWidget {
 
 class _PopUpBookingCardState extends State<PopUpBookingCard> {
   late int numParticipants = widget.session.participants.length;
+  var userID;
+  void getUserEmail() async {
+    userID = await FirebaseAuth.instance.currentUser!.email;
+    setState(() {
+      print(userID);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String userID = "temporarilyIdOnlyLol";
+    getUserEmail();
     final timeStart = DateFormat("h:mma").format(widget.session.timeStart);
     final timeEnd = DateFormat("h:mma").format(widget.session.timeEnd);
     return AlertDialog(
