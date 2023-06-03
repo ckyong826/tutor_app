@@ -51,6 +51,7 @@ class _BookSessionPageState extends State<BookSessionPage> {
           tutorRules: arguments["tutorRules"],
           tutorImage: arguments["tutorImage"],
           tutorName: arguments["tutorName"],
+          cardType: "booking_page",
         ),
       ).then((context) => setState(() {}));
     }

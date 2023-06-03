@@ -148,7 +148,7 @@ class _SessionsPageState extends State<SessionsPage> {
                                           itemCount: sessionsJoined.length);
                                     } else {
                                       return SpinKitRing(
-                                        color: Color(0xff9F9DF3),
+                                        color: Color(0xff66B6FF),
                                         size: ScreenSize.vertical! * 10,
                                       );
                                     }

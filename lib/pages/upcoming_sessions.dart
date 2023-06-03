@@ -76,6 +76,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
           tutorRules: session.tutor["rules"],
           tutorImage: session.tutor["image"],
           tutorName: session.tutor["name"],
+          cardType: "upcoming_page",
         ),
       ).then((context) => setState(() {}));
     }
@@ -183,7 +184,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                                         itemCount: sessionsJoined.length);
                                   } else {
                                     return SpinKitRing(
-                                      color: Color(0xff9F9DF3),
+                                      color: Color(0xff66B6FF),
                                       size: ScreenSize.vertical! * 10,
                                     );
                                   }
