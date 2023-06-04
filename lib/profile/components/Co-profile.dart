@@ -1,7 +1,17 @@
+import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tutor_app/components/GoogleAuth.dart';
+import 'package:tutor_app/pages/loginorsignin.dart';
+import 'package:tutor_app/profile/components/Co-profile.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'readUserData.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:tutor_app/components/DataDetails.dart';
 
 class CoProfile extends StatefulWidget {
   final String userName;
@@ -15,6 +25,28 @@ class CoProfile extends StatefulWidget {
 }
 
 class _CoProfileState extends State<CoProfile> {
+  final user = FirebaseAuth.instance.currentUser!;
+  var userID;
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+    context.go('/ins1/ins2/ins3/options');
+  }
+
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUserEmail();
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  getUserEmail() async {
+    userID = await user.email;
+    setState(() {
+      print(userID);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -35,20 +67,30 @@ class _CoProfileState extends State<CoProfile> {
             ),
           ),
         ),
+
         SizedBox(
           height: size.height * 0.01,
         ),
         //UserName
-        Container(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              widget.userName,
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w700,
-                color: const Color(0xff26273C),
-                fontSize: size.height * 0.05,
-              ),
-            )),
+        Row(
+          children: [
+            Container(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  widget.userName,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xff26273C),
+                    fontSize: size.height * 0.05,
+                  ),
+                )),
+            IconButton(
+              onPressed: signUserOut,
+              icon: Icon(Icons.logout),
+              iconSize: size.width * 0.08,
+            ),
+          ],
+        ),
         SizedBox(
           height: size.height * 0.003,
         ),

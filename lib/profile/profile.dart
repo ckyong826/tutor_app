@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tutor_app/components/GoogleAuth.dart';
 import 'package:tutor_app/pages/loginorsignin.dart';
 import 'package:tutor_app/profile/components/Co-profile.dart';
@@ -27,6 +28,28 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final user = FirebaseAuth.instance.currentUser!;
+  var userID;
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+    context.go('/ins1/ins2/ins3/options');
+  }
+
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getUserEmail();
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  getUserEmail() async {
+    userID = await user.email;
+    setState(() {
+      print(userID);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

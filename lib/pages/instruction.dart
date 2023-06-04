@@ -62,7 +62,7 @@ class Ins1 extends StatelessWidget {
                   textStyle: const TextStyle(color: colorf2),
                 ),
               )),
-          SizedBox(height: size.height * 0.03),
+          SizedBox(height: size.height * 0.02),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -75,7 +75,7 @@ class Ins1 extends StatelessWidget {
                   color: Color(0xFFD6D6D6), size: 11),
             ],
           ),
-          SizedBox(height: size.height * 0.03),
+          SizedBox(height: size.height * 0.02),
           //login button
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -160,7 +160,7 @@ class Ins2 extends StatelessWidget {
                   textStyle: const TextStyle(color: colorf2),
                 ),
               )),
-          SizedBox(height: size.height * 0.03),
+          SizedBox(height: size.height * 0.02),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -173,7 +173,7 @@ class Ins2 extends StatelessWidget {
                   color: Color(0xFFD6D6D6), size: 11),
             ],
           ),
-          SizedBox(height: size.height * 0.03),
+          SizedBox(height: size.height * 0.02),
           //login button
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -258,7 +258,7 @@ class Ins3 extends StatelessWidget {
                   textStyle: const TextStyle(color: colorf2),
                 ),
               )),
-          SizedBox(height: size.height * 0.03),
+          SizedBox(height: size.height * 0.02),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -271,7 +271,7 @@ class Ins3 extends StatelessWidget {
               const Icon(Icons.fiber_manual_record, color: tricolor, size: 11),
             ],
           ),
-          SizedBox(height: size.height * 0.03),
+          SizedBox(height: size.height * 0.02),
           //login button
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -318,14 +318,16 @@ class Fpage extends State<Firstp> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        body: SafeArea(
-      child: Column(children: <Widget>[
-        Image.asset(
-          "assets/images/logo.png",
-          height: size.height * 0.9,
-          width: size.width,
-        ),
-      ]),
+        body: SingleChildScrollView(
+      child: SafeArea(
+        child: Column(children: <Widget>[
+          Image.asset(
+            "assets/images/logo.png",
+            height: size.height * 0.9,
+            width: size.width,
+          ),
+        ]),
+      ),
     ));
   }
 

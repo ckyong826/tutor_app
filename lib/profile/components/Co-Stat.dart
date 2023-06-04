@@ -25,7 +25,7 @@ class _StatState extends State<Stat> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF191C32),
-                    fontSize: size.height * 0.03,
+                    fontSize: size.width * 0.065,
                   ),
                 ),
               ),
@@ -53,7 +53,7 @@ class _StatState extends State<Stat> {
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
                               color: Color(0xFFFFFFFF),
-                              fontSize: size.height * 0.07,
+                              fontSize: size.width * 0.15,
                             ),
                           ),
                           Container(
@@ -63,7 +63,7 @@ class _StatState extends State<Stat> {
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFFFFFFFF),
-                                fontSize: size.height * 0.017,
+                                fontSize: size.width * 0.035,
                               ),
                             ),
                           ),
@@ -80,7 +80,7 @@ class _StatState extends State<Stat> {
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w600,
                               color: Color(0xFFFFFFFF),
-                              fontSize: size.height * 0.07,
+                              fontSize: size.width * 0.15,
                             ),
                           ),
                           Container(
@@ -90,7 +90,7 @@ class _StatState extends State<Stat> {
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFFFFFFFF),
-                                fontSize: size.height * 0.017,
+                                fontSize: size.width * 0.035,
                               ),
                             ),
                           ),

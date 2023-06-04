@@ -55,7 +55,7 @@ class LoginorSignin extends StatelessWidget {
                       textStyle: const TextStyle(color: colorf2),
                     ),
                   )),
-              SizedBox(height: size.height * 0.07),
+              SizedBox(height: size.height * 0.03),
 
               //login button
               ElevatedButton(
@@ -63,7 +63,7 @@ class LoginorSignin extends StatelessWidget {
                   backgroundColor: pricolor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)),
-                  fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
+                  fixedSize: Size((size.width * 0.75), (size.height * 0.07)),
                 ),
                 onPressed: () {
                   context.go('/ins1/ins2/ins3/options/login');
@@ -85,7 +85,7 @@ class LoginorSignin extends StatelessWidget {
                   backgroundColor: colorf3,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)),
-                  fixedSize: Size((size.width * 0.75), (size.height * 0.073)),
+                  fixedSize: Size((size.width * 0.75), (size.height * 0.07)),
                   side: const BorderSide(color: pricolor, width: 2),
                 ),
                 onPressed: () {
